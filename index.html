@@ -694,6 +694,23 @@ body {
   </div>
 
   <div class="section-title">🎯 语法试炼</div>
+  <div style="margin:12px 16px;display:flex;gap:6px;flex-wrap:wrap" id="grammarFilters">
+    <button class="mc-btn" data-gfilter="all" onclick="filterGrammar('all')">全部</button>
+    <button class="mc-btn" data-gfilter="一般现在时" onclick="filterGrammar('一般现在时')">一般现在时</button>
+    <button class="mc-btn" data-gfilter="现在进行时" onclick="filterGrammar('现在进行时')">现在进行时</button>
+    <button class="mc-btn" data-gfilter="一般过去时" onclick="filterGrammar('一般过去时')">一般过去时</button>
+    <button class="mc-btn" data-gfilter="将来时" onclick="filterGrammar('将来时')">将来时</button>
+    <button class="mc-btn" data-gfilter="现在完成时" onclick="filterGrammar('现在完成时')">现在完成时</button>
+    <button class="mc-btn" data-gfilter="介词" onclick="filterGrammar('介词')">介词</button>
+    <button class="mc-btn" data-gfilter="比较级最高级" onclick="filterGrammar('比较级最高级')">比较级</button>
+    <button class="mc-btn" data-gfilter="冠词" onclick="filterGrammar('冠词')">冠词</button>
+    <button class="mc-btn" data-gfilter="情态动词" onclick="filterGrammar('情态动词')">情态动词</button>
+    <button class="mc-btn" data-gfilter="被动语态" onclick="filterGrammar('被动语态')">被动语态</button>
+    <button class="mc-btn" data-gfilter="条件句" onclick="filterGrammar('条件句')">条件句</button>
+    <button class="mc-btn" data-gfilter="间接引语" onclick="filterGrammar('间接引语')">间接引语</button>
+    <button class="mc-btn" data-gfilter="反意疑问句" onclick="filterGrammar('反意疑问句')">反意疑问句</button>
+    <button class="mc-btn" data-gfilter="定语从句" onclick="filterGrammar('定语从句')">定语从句</button>
+  </div>
   <div id="grammarExercises"></div>
 </div>
 
@@ -2486,60 +2503,378 @@ var vocabData = [
   {theme:'daily',word:'nobody',phonetic:'/ˈnəʊbɒdi/',mean:'没有人',ex:'Nobody is here.'}
 ];
 
-var grammarExercises = [
-  {q:'I usually ______ (go) to school at 7.',opts:['go','goes','going','went'],ans:0,explain:'一般现在时，I后面用动词原形go。'},
-  {q:'She ______ (watch) TV every evening.',opts:['watch','watchs','watches','watching'],ans:2,explain:'一般现在时，she是第三人称单数，watch加es变成watches。'},
-  {q:'Look! The children ______ (play) football now.',opts:['play','plays','is playing','are playing'],ans:3,explain:'Look! 和 now 是现在进行时的标志。children是复数，用are playing。'},
-  {q:'I ______ (go) to the zoo yesterday.',opts:['go','goes','went','going'],ans:2,explain:'yesterday是一般过去时的标志，go的过去式是went。'},
-  {q:'What time is it? It is half ______ three.',opts:['in','on','at','past'],ans:3,explain:'半点用half past。'},
-  {q:'My birthday is ______ July.',opts:['in','on','at','to'],ans:0,explain:'月份前面用in。'},
-  {q:'I have classes ______ Monday morning.',opts:['in','on','at','to'],ans:1,explain:'具体某天的早上用on。'},
-  {q:'I usually get up ______ 7 o\'clock.',opts:['in','on','at','to'],ans:2,explain:'具体时刻用at。'},
-  {q:'He ______ (not like) vegetables.',opts:['don\'t like','doesn\'t like','not likes','isn\'t like'],ans:1,explain:'一般现在时否定，he用doesn\'t + 动词原形。'},
-  {q:'______ she ______ (read) books now?',opts:['Do; read','Does; reads','Is; reading','Are; reading'],ans:2,explain:'now表示现在进行时，she用Is + reading。'},
-  {q:'She ______ to the gym every Saturday.',opts:['go','goes','going','went'],ans:1,explain:'一般现在时，she用第三人称单数goes。'},
-  {q:'They ______ football at the moment.',opts:['play','plays','are playing','played'],ans:2,explain:'at the moment是现在进行时，they用are playing。'},
-  {q:'We ______ a great time at the party last night.',opts:['have','has','had','having'],ans:2,explain:'last night是一般过去时，have的过去式是had。'},
-  {q:'The train leaves ______ 9:15 AM.',opts:['in','on','at','to'],ans:2,explain:'具体时刻用at。'},
-  {q:'My sister was born ______ 2015.',opts:['in','on','at','to'],ans:0,explain:'年份前面用in。'},
-  {q:'I will meet you ______ Christmas Day.',opts:['in','on','at','to'],ans:1,explain:'具体节日某天用on。'},
-  {q:'She ______ speak French when she was five.',opts:['can','could','can\'t','couldn\'t'],ans:1,explain:'when she was five是过去时，can的过去式是could。'},
-  {q:'There ______ any milk in the fridge.',opts:['is','are','isn\'t','aren\'t'],ans:2,explain:'any用于否定句，milk不可数用isn\'t。'},
-  {q:'How ______ is the river? It is about 50 meters.',opts:['long','tall','wide','deep'],ans:0,explain:'询问长度用how long。'},
-  {q:'The blue bag is ______ than the red one.',opts:['heavy','heavier','heaviest','more heavy'],ans:1,explain:'than是比较级标志，heavy的比较级是heavier。'},
-  {q:'I have ______ umbrella in my bag.',opts:['a','an','the','/'],ans:1,explain:'umbrella以元音开头，用an。'},
-  {q:'______ you like some coffee?',opts:['Do','Would','Are','Can'],ans:1,explain:'Would you like...是礼貌询问。'},
-  {q:'He ______ goes to bed late. He is always early.',opts:['always','sometimes','never','usually'],ans:2,explain:'He is always early说明他从不晚睡。'},
-  {q:'She is the ______ girl in the class.',opts:['tall','taller','tallest','more tall'],ans:2,explain:'in the class是最高级范围，tall的最高级是tallest。'},
-  {q:'I ______ to the cinema yesterday evening.',opts:['go','goes','went','going'],ans:2,explain:'yesterday evening是一般过去时，go的过去式是went。'},
-  {q:'Look! The baby ______ .',opts:['sleep','sleeps','is sleeping','sleeping'],ans:2,explain:'Look! 是现在进行时标志，baby用is sleeping。'},
-  {q:'______ do you go to school? By bus.',opts:['What','How','Where','When'],ans:1,explain:'By bus回答交通方式，用How提问。'},
-  {q:'This book is ______ than that one.',opts:['interesting','more interesting','most interesting','interested'],ans:1,explain:'than是比较级，多音节词用more interesting。'},
-  {q:'There are ______ apples on the table.',opts:['a','an','some','any'],ans:2,explain:'肯定句中复数名词用some。'},
-  {q:'She ______ her homework yet.',opts:['finish','finishes','has finished','hasn\'t finished'],ans:3,explain:'yet用于否定句，表示还没完成。'},
-  {q:'______ is your father? He is a doctor.',opts:['What','Who','Where','How'],ans:0,explain:'What is your father? 询问职业。'},
-  {q:'I ______ watch horror films. They are too scary.',opts:['always','sometimes','never','often'],ans:2,explain:'They are too scary说明从不看。'},
-  {q:'The weather is ______ today than yesterday.',opts:['bad','worse','worst','more bad'],ans:1,explain:'than是比较级，bad的比较级是worse。'},
-  {q:'______ you ever been to London?',opts:['Do','Did','Have','Has'],ans:2,explain:'ever been是现在完成时标志，you用Have。'},
-  {q:'We ______ to the beach if it is sunny tomorrow.',opts:['go','will go','went','going'],ans:1,explain:'if引导的条件句， tomorrow用将来时will go。'},
-  {q:'She is interested ______ learning Chinese.',opts:['in','on','at','to'],ans:0,explain:'be interested in是固定搭配。'},
-  {q:'The cat is hiding ______ the bed.',opts:['in','on','under','at'],ans:2,explain:'猫躲在床下面用under。'},
-  {q:'I prefer tea ______ coffee.',opts:['than','from','to','with'],ans:2,explain:'prefer...to...是固定搭配。'},
-  {q:'This is the ______ movie I have ever seen.',opts:['good','better','best','more good'],ans:2,explain:'I have ever seen是最高级范围，good的最高级是best。'},
-  {q:'He ______ his leg while he was playing football.',opts:['breaks','broke','broken','breaking'],ans:1,explain:'while he was playing是过去时，break的过去式是broke。'},
-  {q:'______ does it take to get there? About 30 minutes.',opts:['How long','How far','How much','How many'],ans:0,explain:'About 30 minutes回答时间长度，用How long。'},
-  {q:'I am looking forward ______ seeing you.',opts:['in','on','to','at'],ans:2,explain:'look forward to是固定搭配。'},
-  {q:'She is ______ young to drive a car.',opts:['so','too','very','enough'],ans:1,explain:'too...to...是固定搭配，表示太...而不能...'},
-  {q:'The book ______ by Mark Twain.',opts:['write','wrote','written','was written'],ans:3,explain:'书被写，用被动语态was written。'},
-  {q:'I have lived here ______ 2018.',opts:['in','since','for','from'],ans:1,explain:'since+年份表示从...以来。'},
-  {q:'She speaks English ______ .',opts:['good','well','bad','badly'],ans:1,explain:'speak是动词，用副词well修饰。'},
-  {q:'I was tired, ______ I went to bed early.',opts:['but','so','because','or'],ans:1,explain:'tired是原因，so表示结果。'},
-  {q:'______ the students passed the exam.',opts:['All','None','Both','Neither'],ans:0,explain:'all用于三者及以上的全部。'},
-  {q:'I need ______ information about this course.',opts:['a','an','some','any'],ans:2,explain:'information不可数，肯定句用some。'},
-  {q:'He asked me where I ______ .',opts:['live','lived','living','lives'],ans:1,explain:'asked是过去时，间接引语用过去时lived。'}
-];
+var grammarByCategory = {
+  '一般现在时': [
+    {q:'I usually ______ (go) to school at 8:00.',opts:['go','goes','going','went'],ans:0,explain:'一般现在时，I后面用动词原形go。'},
+    {q:'She ______ (watch) TV every evening.',opts:['watch','watchs','watches','watching'],ans:2,explain:'一般现在时，she是第三人称单数，watch加es。'},
+    {q:'He ______ (not like) vegetables.',opts:['don\'t like','doesn\'t like','not likes','isn\'t like'],ans:1,explain:'一般现在时否定，he用doesn\'t + 动词原形。'},
+    {q:'______ she ______ (read) books every day?',opts:['Do; read','Does; reads','Is; reading','Are; reading'],ans:0,explain:'一般现在时疑问句，she用Does + 动词原形。'},
+    {q:'My brother ______ (play) basketball on Sundays.',opts:['play','plays','playing','played'],ans:1,explain:'一般现在时，brother是第三人称单数。'},
+    {q:'They ______ (not speak) French.',opts:['don\'t speak','doesn\'t speak','not speak','aren\'t speak'],ans:0,explain:'一般现在时否定，they用don\'t + 动词原形。'},
+    {q:'Water ______ at 100 degrees.',opts:['boil','boils','boiling','boiled'],ans:1,explain:'科学事实用一般现在时，water是不可数名词用单数。'},
+    {q:'The sun ______ in the east.',opts:['rise','rises','rising','rose'],ans:1,explain:'客观真理用一般现在时，sun是第三人称单数。'},
+    {q:'I ______ (be) a student.',opts:['am','is','are','be'],ans:0,explain:'I后面用am。'},
+    {q:'She ______ (be) a doctor.',opts:['am','is','are','be'],ans:1,explain:'She后面用is。'},
+    {q:'They ______ (be) my friends.',opts:['am','is','are','be'],ans:2,explain:'They后面用are。'},
+    {q:'My cat ______ (sleep) all day.',opts:['sleep','sleeps','sleeping','slept'],ans:1,explain:'一般现在时，cat是第三人称单数。'},
+    {q:'We ______ (have) lunch at 12:00.',opts:['have','has','having','had'],ans:0,explain:'We后面用动词原形have。'},
+    {q:'The shop ______ at 9:00 every morning.',opts:['open','opens','opening','opened'],ans:1,explain:'一般现在时，shop是第三人称单数。'},
+    {q:'I always ______ (brush) my teeth before bed.',opts:['brush','brushes','brushing','brushed'],ans:0,explain:'一般现在时，I后面用动词原形。'},
+    {q:'She ______ (study) English every day.',opts:['study','studies','studying','studied'],ans:1,explain:'一般现在时，study变y为i加es。'},
+    {q:'Birds ______ (fly) in the sky.',opts:['fly','flys','flies','flying'],ans:2,explain:'一般现在时，fly变y为i加es。'},
+    {q:'He ______ (do) his homework after school.',opts:['do','does','doing','did'],ans:1,explain:'一般现在时，he用does。'},
+    {q:'My parents ______ (live) in Beijing.',opts:['live','lives','living','lived'],ans:0,explain:'Parents是复数，用动词原形。'},
+    {q:'The train ______ at 8:00 every morning.',opts:['leave','leaves','left','leaving'],ans:1,explain:'一般现在时，train是第三人称单数。'},
+    {q:'My dog ______ (bark) at strangers.',opts:['bark','barks','barking','barked'],ans:1,explain:'一般现在时，dog是第三人称单数。'},
+    {q:'The birds ______ (sing) in the morning.',opts:['sing','sings','singing','sang'],ans:0,explain:'birds复数，用动词原形。'},
+    {q:'My grandmother ______ (tell) us stories.',opts:['tell','tells','telling','told'],ans:1,explain:'grandmother是第三人称单数。'},
+    {q:'The earth ______ around the sun.',opts:['go','goes','going','went'],ans:1,explain:'客观真理用一般现在时。'},
+    {q:'I ______ (not understand) this word.',opts:['don\'t understand','doesn\'t understand','not understand','understanding'],ans:0,explain:'I用don\'t understand。'},
+    {q:'______ your father ______ (work) in a hospital?',opts:['Do; work','Does; work','Is; working','Are; working'],ans:1,explain:'father是第三人称单数，用Does + work。'},
+    {q:'We usually ______ (walk) to school.',opts:['walk','walks','walking','walked'],ans:0,explain:'We用动词原形。'},
+    {q:'The museum ______ at 9:00 AM.',opts:['open','opens','opening','opened'],ans:1,explain:'museum是第三人称单数。'},
+    {q:'I ______ (be) very tired today.',opts:['am','is','are','be'],ans:0,explain:'I用am。'},
+    {q:'My shoes ______ (be) under the bed.',opts:['am','is','are','be'],ans:2,explain:'shoes复数，用are。'},
+    {q:'I usually ______ (go) to school at 8:00. (Extra)',opts:['go','goes','going','went'],ans:0,explain:'一般现在时，I后面用动词原形go。'},
+  ],
+  '现在进行时': [
+    {q:'Look! The children ______ (play) football now.',opts:['play','plays','is playing','are playing'],ans:3,explain:'Look!是现在进行时标志，children复数用are playing。'},
+    {q:'She ______ (watch) TV at the moment.',opts:['watch','watches','is watching','watched'],ans:2,explain:'at the moment是现在进行时标志，she用is watching。'},
+    {q:'Listen! Someone ______ (sing) in the next room.',opts:['sing','sings','is singing','are singing'],ans:2,explain:'Listen!是现在进行时标志，someone用单数is。'},
+    {q:'______ you ______ (wait) for the bus?',opts:['Do; wait','Are; waiting','Is; waiting','Do; waiting'],ans:1,explain:'现在进行时疑问句，you用Are + waiting。'},
+    {q:'I ______ (not read) a book right now.',opts:['don\'t read','am not reading','is not reading','not reading'],ans:1,explain:'right now是现在进行时标志，I用am not reading。'},
+    {q:'They ______ (have) dinner now.',opts:['have','has','are having','is having'],ans:2,explain:'now是现在进行时标志，they用are having。'},
+    {q:'Be quiet! The baby ______ (sleep).',opts:['sleep','sleeps','is sleeping','are sleeping'],ans:2,explain:'Be quiet!暗示动作正在进行，baby用is sleeping。'},
+    {q:'What ______ you ______ (do)?',opts:['do; do','are; doing','is; doing','do; doing'],ans:1,explain:'现在进行时特殊疑问句，you用are doing。'},
+    {q:'The dog ______ (run) in the garden.',opts:['run','runs','is running','are running'],ans:2,explain:'动作正在进行，dog用is running。'},
+    {q:'We ______ (play) games now. Please join us.',opts:['play','plays','are playing','is playing'],ans:2,explain:'now是现在进行时标志，we用are playing。'},
+    {q:'He ______ (write) a letter at the moment.',opts:['write','writes','is writing','are writing'],ans:2,explain:'at the moment是现在进行时标志，he用is writing。'},
+    {q:'The students ______ (not listen) to the teacher.',opts:['don\'t listen','aren\'t listening','isn\'t listening','not listening'],ans:1,explain:'students复数，现在进行时否定用aren\'t listening。'},
+    {q:'Look! The baby ______ (cry).',opts:['cry','cries','is crying','are crying'],ans:2,explain:'Look!是现在进行时标志。'},
+    {q:'Shh! The teacher ______ (speak).',opts:['speak','speaks','is speaking','are speaking'],ans:2,explain:'Shh!暗示动作正在进行。'},
+    {q:'What ______ you ______ (look) at?',opts:['do; look','are; looking','is; looking','do; looking'],ans:1,explain:'you用are looking。'},
+    {q:'The dog ______ (run) after the cat.',opts:['run','runs','is running','are running'],ans:2,explain:'动作正在进行。'},
+    {q:'I ______ (wait) for the bus now.',opts:['wait','waits','am waiting','is waiting'],ans:2,explain:'now是现在进行时标志。'},
+    {q:'The children ______ (not play) outside. It is raining.',opts:['don\'t play','aren\'t playing','isn\'t playing','not playing'],ans:1,explain:'children复数，用aren\'t playing。'},
+    {q:'______ she ______ (dance)?',opts:['Do; dance','Does; dance','Is; dancing','Are; dancing'],ans:2,explain:'she用Is dancing。'},
+    {q:'Look! The children ______ (play) football now. (Extra)',opts:['play','plays','is playing','are playing'],ans:3,explain:'Look!是现在进行时标志，children复数用are playing。'},
+  ],
+  '一般过去时': [
+    {q:'I ______ (go) to the zoo yesterday.',opts:['go','goes','went','going'],ans:2,explain:'yesterday是一般过去时标志，go的过去式是went。'},
+    {q:'She ______ (buy) a new dress last week.',opts:['buy','buys','buying','bought'],ans:3,explain:'last week是一般过去时标志，buy的过去式是bought。'},
+    {q:'They ______ (not come) to the party.',opts:['don\'t come','didn\'t come','not came','not coming'],ans:1,explain:'一般过去时否定用didn\'t + 动词原形。'},
+    {q:'______ he ______ (visit) his grandma last Sunday?',opts:['Do; visit','Did; visit','Does; visit','Is; visiting'],ans:1,explain:'一般过去时疑问句用Did + 动词原形。'},
+    {q:'We ______ (have) a great time at the party last night.',opts:['have','has','had','having'],ans:2,explain:'last night是一般过去时标志，have的过去式是had。'},
+    {q:'I ______ (eat) an apple this morning.',opts:['eat','eats','eating','ate'],ans:3,explain:'this morning是一般过去时标志，eat的过去式是ate。'},
+    {q:'She ______ (write) a letter to her friend.',opts:['write','writes','writing','wrote'],ans:3,explain:'write的过去式是wrote。'},
+    {q:'He ______ (take) the bus to school.',opts:['take','takes','taking','took'],ans:3,explain:'take的过去式是took。'},
+    {q:'We ______ (see) a film yesterday.',opts:['see','sees','seeing','saw'],ans:3,explain:'see的过去式是saw。'},
+    {q:'I ______ (meet) my best friend last summer.',opts:['meet','meets','meeting','met'],ans:3,explain:'meet的过去式是met。'},
+    {q:'She ______ (find) her keys under the sofa.',opts:['find','finds','finding','found'],ans:3,explain:'find的过去式是found。'},
+    {q:'They ______ (swim) in the lake.',opts:['swim','swims','swimming','swam'],ans:3,explain:'swim的过去式是swam。'},
+    {q:'He ______ (give) me a book for my birthday.',opts:['give','gives','giving','gave'],ans:3,explain:'give的过去式是gave。'},
+    {q:'I ______ (know) the answer.',opts:['know','knows','knowing','knew'],ans:3,explain:'know的过去式是knew。'},
+    {q:'She ______ (make) a cake for her mother.',opts:['make','makes','making','made'],ans:3,explain:'make的过去式是made。'},
+    {q:'We ______ (begin) our class at 8:00 yesterday.',opts:['begin','begins','beginning','began'],ans:3,explain:'begin的过去式是began。'},
+    {q:'I ______ (fall) down yesterday.',opts:['fall','falls','fell','falling'],ans:2,explain:'fall的过去式是fell。'},
+    {q:'She ______ (wear) a red dress to the party.',opts:['wear','wears','wearing','wore'],ans:3,explain:'wear的过去式是wore。'},
+    {q:'They ______ (build) a house last year.',opts:['build','builds','building','built'],ans:3,explain:'build的过去式是built。'},
+    {q:'He ______ (draw) a beautiful picture.',opts:['draw','draws','drawing','drew'],ans:3,explain:'draw的过去式是drew。'},
+    {q:'We ______ (spend) a lovely day at the beach.',opts:['spend','spends','spending','spent'],ans:3,explain:'spend的过去式是spent。'},
+    {q:'I ______ (send) an email to my friend.',opts:['send','sends','sending','sent'],ans:3,explain:'send的过去式是sent。'},
+    {q:'She ______ (teach) us English last term.',opts:['teach','teaches','teaching','taught'],ans:3,explain:'teach的过去式是taught。'},
+    {q:'He ______ (think) it was a good idea.',opts:['think','thinks','thinking','thought'],ans:3,explain:'think的过去式是thought。'},
+    {q:'We ______ (sit) under a big tree.',opts:['sit','sits','sitting','sat'],ans:3,explain:'sit的过去式是sat。'},
+    {q:'I ______ (keep) the book for two weeks.',opts:['keep','keeps','keeping','kept'],ans:3,explain:'keep的过去式是kept。'},
+  ],
+  '将来时': [
+    {q:'I ______ (go) to the park tomorrow.',opts:['go','will go','going','went'],ans:1,explain:'tomorrow是将来时标志，用will go。'},
+    {q:'She ______ (visit) her grandparents next week.',opts:['visits','will visit','is visiting','visited'],ans:1,explain:'next week是将来时标志，用will visit。'},
+    {q:'We ______ to the beach if it is sunny tomorrow.',opts:['go','will go','went','going'],ans:1,explain:'if引导的条件句，tomorrow用将来时will go。'},
+    {q:'______ you ______ (help) me with my homework?',opts:['Do; help','Will; help','Are; helping','Did; help'],ans:1,explain:'将来时疑问句用Will + 动词原形。'},
+    {q:'I think it ______ (rain) this afternoon.',opts:['rain','rains','will rain','is raining'],ans:2,explain:'this afternoon表示将来，用will rain。'},
+    {q:'They ______ (not come) to the meeting.',opts:['don\'t come','won\'t come','not come','didn\'t come'],ans:1,explain:'将来时否定用won\'t + 动词原形。'},
+    {q:'I ______ (be) a doctor when I grow up.',opts:['am','will be','am being','was'],ans:1,explain:'when I grow up表示将来，用will be。'},
+    {q:'Next year, we ______ (move) to a new house.',opts:['move','will move','are moving','moved'],ans:1,explain:'Next year是将来时标志，用will move。'},
+    {q:'I ______ (call) you tonight.',opts:['call','will call','calling','called'],ans:1,explain:'tonight表示将来，用will call。'},
+    {q:'Don\'t worry. I ______ (finish) it soon.',opts:['finish','will finish','am finishing','finished'],ans:1,explain:'soon表示将来，用will finish。'},
+    {q:'I ______ (call) you after dinner.',opts:['call','will call','am calling','called'],ans:1,explain:'after dinner表示将来。'},
+    {q:'She ______ (be) 12 years old next year.',opts:['is','will be','is being','was'],ans:1,explain:'next year表示将来。'},
+    {q:'We ______ (not have) school tomorrow.',opts:['don\'t have','won\'t have','not have','didn\'t have'],ans:1,explain:'tomorrow表示将来，否定用won\'t have。'},
+    {q:'______ they ______ (come) to the party?',opts:['Do; come','Will; come','Are; coming','Did; come'],ans:1,explain:'将来时疑问句用Will。'},
+    {q:'I ______ (help) you with your homework.',opts:['help','will help','am helping','helped'],ans:1,explain:'表示将要帮忙。'},
+    {q:'I ______ (go) to the park tomorrow. (Extra)',opts:['go','will go','going','went'],ans:1,explain:'tomorrow是将来时标志，用will go。'},
+  ],
+  '现在完成时': [
+    {q:'I ______ (finish) my homework.',opts:['finish','finished','have finished','has finished'],ans:2,explain:'现在完成时，I用have finished。'},
+    {q:'She ______ (not see) that film before.',opts:['doesn\'t see','didn\'t see','hasn\'t seen','haven\'t seen'],ans:2,explain:'before是现在完成时标志，she用hasn\'t seen。'},
+    {q:'______ you ever ______ (eat) sushi?',opts:['Do; eat','Did; eat','Have; eaten','Has; eaten'],ans:2,explain:'ever是现在完成时标志，you用Have eaten。'},
+    {q:'They ______ (live) here for ten years.',opts:['live','lived','have lived','has lived'],ans:2,explain:'for ten years是现在完成时标志，they用have lived。'},
+    {q:'I ______ (just / finish) my lunch.',opts:['just finish','just finished','have just finished','has just finished'],ans:2,explain:'just是现在完成时标志，I用have just finished。'},
+    {q:'She ______ (already / leave).',opts:['already leaves','already left','has already left','have already left'],ans:2,explain:'already是现在完成时标志，she用has already left。'},
+    {q:'We ______ (never / visit) Paris.',opts:['never visit','never visited','have never visited','has never visited'],ans:2,explain:'never是现在完成时标志，we用have never visited。'},
+    {q:'He ______ (lose) his keys. He can\'t find them.',opts:['lose','lost','has lost','have lost'],ans:2,explain:'has lost表示过去发生对现在有影响。'},
+    {q:'I ______ (read) this book three times.',opts:['read','am reading','have read','has read'],ans:2,explain:'three times表示经历，用现在完成时。'},
+    {q:'______ she ______ (arrive) yet?',opts:['Does; arrive','Did; arrive','Has; arrived','Is; arriving'],ans:2,explain:'yet是现在完成时标志，she用Has arrived。'},
+    {q:'She ______ (just / arrive).',opts:['just arrive','just arrived','has just arrived','have just arrived'],ans:2,explain:'she用has just arrived。'},
+    {q:'I ______ (never / eat) sushi before.',opts:['never eat','never ate','have never eaten','has never eaten'],ans:2,explain:'I用have never eaten。'},
+    {q:'______ you ______ (finish) your homework yet?',opts:['Do; finish','Did; finish','Have; finished','Has; finished'],ans:2,explain:'you用Have finished。'},
+    {q:'They ______ (be) to London twice.',opts:['are','were','have been','has been'],ans:2,explain:'they用have been。'},
+    {q:'He ______ (work) here since 2020.',opts:['works','worked','has worked','have worked'],ans:2,explain:'he用has worked。'},
+    {q:'I ______ (already / see) this film.',opts:['already see','already saw','have already seen','has already seen'],ans:2,explain:'I用have already seen。'},
+    {q:'I ______ (finish) my homework. (Extra)',opts:['finish','finished','have finished','has finished'],ans:2,explain:'现在完成时，I用have finished。'},
+    {q:'I ______ (finish) my homework. (Extra)',opts:['finish','finished','have finished','has finished'],ans:2,explain:'现在完成时，I用have finished。'},
+    {q:'I ______ (finish) my homework. (Extra)',opts:['finish','finished','have finished','has finished'],ans:2,explain:'现在完成时，I用have finished。'},
+  ],
+  '介词': [
+    {q:'My birthday is ______ July.',opts:['in','on','at','to'],ans:0,explain:'月份前面用in。'},
+    {q:'I have classes ______ Monday.',opts:['in','on','at','to'],ans:1,explain:'具体某天用on。'},
+    {q:'I get up ______ 7 o\'clock.',opts:['in','on','at','to'],ans:2,explain:'具体时刻用at。'},
+    {q:'I will meet you ______ Christmas Day.',opts:['in','on','at','to'],ans:1,explain:'具体节日某天用on。'},
+    {q:'My sister was born ______ 2015.',opts:['in','on','at','to'],ans:0,explain:'年份前面用in。'},
+    {q:'The book is ______ the table.',opts:['in','on','at','to'],ans:1,explain:'物体在表面用on。'},
+    {q:'The cat is sleeping ______ the sofa.',opts:['in','on','under','at'],ans:1,explain:'在沙发上用on。'},
+    {q:'The children are playing ______ the garden.',opts:['in','on','at','to'],ans:0,explain:'在花园里面用in。'},
+    {q:'The cat is hiding ______ the bed.',opts:['in','on','under','at'],ans:2,explain:'在床下面用under。'},
+    {q:'The flowers are ______ the garden.',opts:['in','on','at','to'],ans:0,explain:'在花园里面用in。'},
+    {q:'I am interested ______ learning French.',opts:['in','on','at','to'],ans:0,explain:'be interested in是固定搭配。'},
+    {q:'He is good ______ singing.',opts:['in','on','at','to'],ans:2,explain:'be good at是固定搭配。'},
+    {q:'She is afraid ______ dogs.',opts:['in','on','of','at'],ans:2,explain:'be afraid of是固定搭配。'},
+    {q:'The children are looking forward ______ Christmas.',opts:['in','on','to','at'],ans:2,explain:'look forward to是固定搭配。'},
+    {q:'I prefer coffee ______ tea.',opts:['than','to','from','with'],ans:1,explain:'prefer...to...是固定搭配。'},
+    {q:'The book is ______ the table and the chair.',opts:['in','on','between','at'],ans:2,explain:'between表示在两者之间。'},
+    {q:'She is ______ the phone.',opts:['in','on','at','to'],ans:1,explain:'on the phone是固定搭配。'},
+    {q:'I prefer tea ______ coffee.',opts:['than','to','from','with'],ans:1,explain:'prefer...to...是固定搭配。'},
+    {q:'The train leaves ______ 9:15 AM.',opts:['in','on','at','to'],ans:2,explain:'具体时刻用at。'},
+    {q:'We have lunch ______ noon.',opts:['in','on','at','to'],ans:2,explain:'noon用at。'},
+    {q:'I was born ______ 2015.',opts:['in','on','at','to'],ans:0,explain:'年份用in。'},
+    {q:'The meeting is ______ 3:00 PM.',opts:['in','on','at','to'],ans:2,explain:'具体时刻用at。'},
+    {q:'We go camping ______ summer.',opts:['in','on','at','to'],ans:0,explain:'季节用in。'},
+    {q:'I will see you ______ Friday.',opts:['in','on','at','to'],ans:1,explain:'星期用on。'},
+    {q:'The cat jumped ______ the fence.',opts:['in','on','over','at'],ans:2,explain:'over表示越过。'},
+    {q:'Put the book ______ the shelf.',opts:['in','on','at','to'],ans:1,explain:'on the shelf在架子上。'},
+    {q:'She is sitting ______ me.',opts:['in','on','next to','at'],ans:2,explain:'next to表示在旁边。'},
+    {q:'The bus stop is ______ the school.',opts:['in','on','opposite','at'],ans:2,explain:'opposite表示在对面。'},
+    {q:'Walk ______ the bridge.',opts:['in','on','across','at'],ans:2,explain:'across表示穿过。'},
+    {q:'The restaurant is ______ the bank and the post office.',opts:['in','on','between','at'],ans:2,explain:'between表示在两者之间。'},
+  ],
+  '比较级最高级': [
+    {q:'The blue bag is ______ than the red one.',opts:['heavy','heavier','heaviest','more heavy'],ans:1,explain:'than是比较级标志，heavy的比较级是heavier。'},
+    {q:'She is ______ than her sister.',opts:['tall','taller','tallest','more tall'],ans:1,explain:'than是比较级，tall的比较级是taller。'},
+    {q:'She is the ______ girl in the class.',opts:['tall','taller','tallest','more tall'],ans:2,explain:'in the class是最高级范围，tall的最高级是tallest。'},
+    {q:'This book is ______ than that one.',opts:['interesting','more interesting','most interesting','interested'],ans:1,explain:'than是比较级，多音节词用more interesting。'},
+    {q:'This is the ______ movie I have ever seen.',opts:['good','better','best','more good'],ans:2,explain:'I have ever seen是最高级范围，good的最高级是best。'},
+    {q:'The weather is getting ______ .',opts:['cold','colder','coldest','more cold'],ans:1,explain:'get + 比较级表示变得越来越……'},
+    {q:'She has ______ hair than her mother.',opts:['long','longer','longest','more long'],ans:1,explain:'than是比较级，long的比较级是longer。'},
+    {q:'She is ______ than her brother.',opts:['old','older','oldest','more old'],ans:1,explain:'than是比较级，old的比较级是older。'},
+    {q:'This is ______ book I have ever read.',opts:['good','better','the best','the better'],ans:2,explain:'I have ever read是最高级范围，good的最高级是best。'},
+    {q:'The weather is ______ today than yesterday.',opts:['bad','worse','worst','more bad'],ans:1,explain:'than是比较级，bad的比较级是worse。'},
+    {q:'He is ______ tall ______ walk through the door.',opts:['so; to','too; to','very; to','enough; to'],ans:1,explain:'too...to...表示太……而不能……'},
+    {q:'She is ______ young to drive a car.',opts:['so','too','very','enough'],ans:1,explain:'too...to...表示太……而不能……'},
+    {q:'The elephant is ______ than the mouse.',opts:['big','bigger','biggest','more big'],ans:1,explain:'than是比较级，big的比较级是bigger。'},
+    {q:'He is the ______ student in our school.',opts:['good','better','best','more good'],ans:2,explain:'in our school是最高级范围。'},
+    {q:'My house is ______ than yours.',opts:['small','smaller','smallest','more small'],ans:1,explain:'than是比较级，small的比较级是smaller。'},
+    {q:'This is ______ difficult exam I have ever taken.',opts:['a','an','the most','the more'],ans:2,explain:'最高级用the most difficult。'},
+    {q:'She is ______ intelligent than her sister.',opts:['intelligent','more intelligent','most intelligent','intelligenter'],ans:1,explain:'多音节词比较级用more。'},
+    {q:'Today is ______ hot day of the year.',opts:['a hot','the hotter','the hottest','hotter'],ans:2,explain:'最高级用the hottest。'},
+    {q:'My bag is ______ than yours.',opts:['heavy','heavier','heaviest','more heavy'],ans:1,explain:'heavy比较级是heavier。'},
+    {q:'He runs ______ in his class.',opts:['fast','faster','the fastest','more fast'],ans:2,explain:'最高级用the fastest。'},
+    {q:'The blue bag is ______ than the red one. (Extra)',opts:['heavy','heavier','heaviest','more heavy'],ans:1,explain:'than是比较级标志，heavy的比较级是heavier。'},
+    {q:'The blue bag is ______ than the red one. (Extra)',opts:['heavy','heavier','heaviest','more heavy'],ans:1,explain:'than是比较级标志，heavy的比较级是heavier。'},
+  ],
+  '冠词': [
+    {q:'I have ______ umbrella in my bag.',opts:['a','an','the','/'],ans:1,explain:'umbrella以元音开头，用an。'},
+    {q:'This is ______ interesting book.',opts:['a','an','the','/'],ans:1,explain:'interesting以元音开头，用an。'},
+    {q:'I would like ______ apple, please.',opts:['a','an','the','/'],ans:1,explain:'apple以元音开头，用an。'},
+    {q:'She speaks ______ Chinese.',opts:['a','an','the','/'],ans:3,explain:'语言前不加冠词。'},
+    {q:'The weather is ______ nice today.',opts:['a','an','the','/'],ans:3,explain:'weather是不可数名词，前面不加冠词。'},
+    {q:'The movie was ______ boring.',opts:['a','an','the','/'],ans:3,explain:'形容词前不加冠词。'},
+    {q:'I have ______ money in my wallet.',opts:['a','an','some','any'],ans:2,explain:'money不可数，肯定句用some。'},
+    {q:'______ sun is shining brightly.',opts:['A','An','The','/'],ans:2,explain:'独一无二的事物用the。'},
+    {q:'I play ______ piano every day.',opts:['a','an','the','/'],ans:2,explain:'乐器前用the。'},
+    {q:'She is ______ doctor.',opts:['a','an','the','/'],ans:0,explain:'职业前用a/an，doctor以辅音开头用a。'},
+    {q:'I go to ______ school by bus.',opts:['a','an','the','/'],ans:3,explain:'go to school固定搭配，不加冠词。'},
+    {q:'This is ______ best restaurant in town.',opts:['a','an','the','/'],ans:2,explain:'最高级前用the。'},
+    {q:'I saw ______ elephant at the zoo.',opts:['a','an','the','/'],ans:1,explain:'elephant以元音开头用an。'},
+    {q:'______ moon is beautiful tonight.',opts:['A','An','The','/'],ans:2,explain:'独一无二用the。'},
+    {q:'I play ______ basketball every day.',opts:['a','an','the','/'],ans:3,explain:'球类运动不加冠词。'},
+    {q:'She is ______ honest girl.',opts:['a','an','the','/'],ans:1,explain:'honest以元音音素开头用an。'},
+    {q:'I need ______ advice.',opts:['a','an','the','/'],ans:3,explain:'advice不可数，不加冠词。'},
+  ],
+  '情态动词': [
+    {q:'______ you play the piano?',opts:['Can','Do','Are','Have'],ans:0,explain:'can表示能力。'},
+    {q:'She ______ speak French when she was five.',opts:['can','could','can\'t','couldn\'t'],ans:1,explain:'when she was five是过去时，can的过去式是could。'},
+    {q:'You ______ smoke here. It is not allowed.',opts:['can','must','mustn\'t','should'],ans:2,explain:'mustn\'t表示禁止。'},
+    {q:'I ______ go to the doctor tomorrow.',opts:['go','will go','went','going'],ans:1,explain:'will go表示将来。'},
+    {q:'We ______ be quiet in the library.',opts:['can','must','may','shouldn\'t'],ans:1,explain:'must表示必须。'},
+    {q:'______ I use your phone?',opts:['Can','Must','Should','Will'],ans:0,explain:'Can表示请求许可。'},
+    {q:'You ______ eat too much candy. It is bad for your teeth.',opts:['can','must','shouldn\'t','may'],ans:2,explain:'shouldn\'t表示不应该。'},
+    {q:'I ______ swim when I was young.',opts:['can','could','must','should'],ans:1,explain:'could表示过去的能力。'},
+    {q:'______ you help me with this box?',opts:['Can','Must','Should','Will'],ans:0,explain:'Can you help me? 请求帮助。'},
+    {q:'You ______ finish your homework before playing games.',opts:['can','must','may','shouldn\'t'],ans:1,explain:'must表示必须。'},
+    {q:'It ______ rain tomorrow. Take an umbrella.',opts:['can','must','may','should'],ans:2,explain:'may表示可能性。'},
+    {q:'______ I borrow your pen?',opts:['Can','Must','Should','Will'],ans:0,explain:'Can表示请求许可。'},
+    {q:'You ______ not run in the classroom.',opts:['can','must','may','should'],ans:1,explain:'must not表示禁止。'},
+    {q:'It ______ be true! I don\'t believe it.',opts:['can','must','can\'t','should'],ans:2,explain:'can\'t表示不可能。'},
+    {q:'You ______ see a doctor. You look sick.',opts:['can','must','should','may'],ans:2,explain:'should表示建议。'},
+    {q:'______ you like some tea?',opts:['Do','Would','Can','Will'],ans:1,explain:'Would you like表示礼貌邀请。'},
+    {q:'______ you play the piano? (Extra)',opts:['Can','Do','Are','Have'],ans:0,explain:'can表示能力。'},
+  ],
+  '被动语态': [
+    {q:'The book ______ by Mark Twain.',opts:['write','wrote','written','was written'],ans:3,explain:'书被写，用被动语态was written。'},
+    {q:'The cake ______ by my mother.',opts:['make','made','making','was made'],ans:3,explain:'蛋糕被做，用被动语态was made。'},
+    {q:'The letter ______ yesterday.',opts:['arrives','arrived','has arrived','is arriving'],ans:1,explain:'letter arrived，主动语态即可。'},
+    {q:'This bridge ______ in 1990.',opts:['build','built','was built','is built'],ans:2,explain:'桥被建造，in 1990用过去时was built。'},
+    {q:'English ______ all over the world.',opts:['speak','speaks','is spoken','are spoken'],ans:2,explain:'英语被说，用被动语态is spoken。'},
+    {q:'The window ______ by the boy.',opts:['break','broke','was broken','is broken'],ans:2,explain:'窗户被打破，用被动语态was broken。'},
+    {q:'These cars ______ in Japan.',opts:['make','made','are made','were made'],ans:2,explain:'cars被制造，用are made。'},
+    {q:'The house ______ last year.',opts:['builds','built','was built','is built'],ans:2,explain:'last year用过去被动was built。'},
+    {q:'The problem ______ by the students.',opts:['solves','solved','is solved','are solved'],ans:2,explain:'problem单数，用is solved。'},
+    {q:'The window ______ by the wind.',opts:['breaks','broke','was broken','is broken'],ans:2,explain:'被风吹破，用was broken。'},
+    {q:'The report ______ tomorrow.',opts:['finishes','finished','will be finished','is finishing'],ans:2,explain:'tomorrow用将来被动will be finished。'},
+    {q:'The book ______ by Mark Twain. (Extra)',opts:['write','wrote','written','was written'],ans:3,explain:'书被写，用被动语态was written。'},
+    {q:'The book ______ by Mark Twain. (Extra)',opts:['write','wrote','written','was written'],ans:3,explain:'书被写，用被动语态was written。'},
+  ],
+  '条件句': [
+    {q:'If it rains tomorrow, we ______ at home.',opts:['stay','will stay','stayed','staying'],ans:1,explain:'if引导的条件句，tomorrow用将来时will stay。'},
+    {q:'I ______ go to the park if it is sunny.',opts:['will','would','can','may'],ans:0,explain:'if + 一般现在时，主句用will。'},
+    {q:'If I ______ rich, I would buy a big house.',opts:['am','were','was','be'],ans:1,explain:'虚拟语气，if I were...表示与现在事实相反。'},
+    {q:'If you study hard, you ______ good grades.',opts:['get','will get','got','getting'],ans:1,explain:'if + 一般现在时，主句用will get。'},
+    {q:'If you heat ice, it ______ .',opts:['melts','will melt','melted','melting'],ans:0,explain:'科学事实，主句用一般现在时。'},
+    {q:'I would buy a car if I ______ enough money.',opts:['have','had','will have','having'],ans:1,explain:'虚拟语气，与现在事实相反用过去时。'},
+    {q:'If it ______ tomorrow, we will stay home.',opts:['rain','rains','will rain','rained'],ans:1,explain:'if从句用一般现在时表将来。'},
+    {q:'If it rains tomorrow, we ______ at home. (Extra)',opts:['stay','will stay','stayed','staying'],ans:1,explain:'if引导的条件句，tomorrow用将来时will stay。'},
+  ],
+  '间接引语': [
+    {q:'He asked me if I ______ hungry.',opts:['am','was','were','is'],ans:2,explain:'asked是过去时，间接引语用过去时were。'},
+    {q:'She said she ______ tired.',opts:['is','was','were','be'],ans:1,explain:'said是过去时，间接引语用过去时was。'},
+    {q:'Tom told me he ______ (go) to the cinema.',opts:['go','went','was going','had gone'],ans:2,explain:'told是过去时，间接引语用过去进行时was going。'},
+  ],
+  '反意疑问句': [
+    {q:'She is a student, ______?',opts:['is she','isn\'t she','does she','doesn\'t she'],ans:1,explain:'前肯后否，is的否定是isn\'t。'},
+    {q:'You like music, ______?',opts:['do you','don\'t you','are you','aren\'t you'],ans:1,explain:'前肯后否，like是实义动词用don\'t you。'},
+    {q:'He can swim, ______?',opts:['can he','can\'t he','does he','doesn\'t he'],ans:1,explain:'前肯后否，can的否定是can\'t。'},
+    {q:'They haven\'t arrived, ______?',opts:['have they','haven\'t they','do they','don\'t they'],ans:0,explain:'前否后肯，haven\'t的肯定是have they。'},
+    {q:'It is a nice day, ______?',opts:['is it','isn\'t it','does it','doesn\'t it'],ans:1,explain:'前肯后否，is的否定是isn\'t。'},
+    {q:'They don\'t like spinach, ______?',opts:['do they','don\'t they','are they','aren\'t they'],ans:0,explain:'前否后肯，don\'t的肯定是do。'},
+    {q:'You have finished, ______?',opts:['have you','haven\'t you','do you','don\'t you'],ans:1,explain:'have的否定是haven\'t。'},
+    {q:'She is a student, ______? (Extra)',opts:['is she','isn\'t she','does she','doesn\'t she'],ans:1,explain:'前肯后否，is的否定是isn\'t。'},
+    {q:'She is a student, ______? (Extra)',opts:['is she','isn\'t she','does she','doesn\'t she'],ans:1,explain:'前肯后否，is的否定是isn\'t。'},
+  ],
+  '定语从句': [
+    {q:'This is the man ______ lives next door.',opts:['who','which','that','what'],ans:0,explain:'先行词是man（人），用who。'},
+    {q:'The book ______ is on the table is mine.',opts:['who','which','that','what'],ans:1,explain:'先行词是book（物），用which。'},
+    {q:'I know a girl ______ can speak five languages.',opts:['who','which','that','what'],ans:0,explain:'先行词是girl（人），用who。'},
+    {q:'The car ______ he bought is very expensive.',opts:['who','which','that','what'],ans:1,explain:'先行词是car（物），用which。'},
+    {q:'The girl ______ won the race is my friend.',opts:['who','which','whose','whom'],ans:0,explain:'先行词是人，作主语用who。'},
+    {q:'The pen ______ is on the desk is mine.',opts:['who','which','whose','whom'],ans:1,explain:'先行词是物，用which。'},
+    {q:'The man ______ car was stolen called the police.',opts:['who','which','whose','whom'],ans:2,explain:'表示所属关系用whose。'},
+    {q:'This is the man ______ lives next door. (Extra)',opts:['who','which','that','what'],ans:0,explain:'先行词是man（人），用who。'},
+    {q:'This is the man ______ lives next door. (Extra)',opts:['who','which','that','what'],ans:0,explain:'先行词是man（人），用who。'},
+  ],
+};
+var grammarExercises = [];
+for(var cat in grammarByCategory){
+  for(var i = 0; i < grammarByCategory[cat].length; i++){
+    grammarExercises.push(grammarByCategory[cat][i]);
+  }
+}
+
 
 var readingExercises = [
+  {title:'My School',text:'I study at Sunshine Primary School. It is a big and beautiful school. There are thirty classrooms in my school. My classroom is on the second floor. It is bright and clean. There are many books in the library. I like my school very much.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Family',text:'I have a happy family. There are four people in my family. My father is a doctor. He works in a big hospital. My mother is a teacher. She teaches English. My sister is older than me. She is a student at university. We live in Beijing.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Best Friend',text:'My best friend is Lily. She is ten years old. She has long black hair and big eyes. She likes reading books and playing the piano. Every weekend, we go to the park together. We fly kites and play games. Lily is very kind.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A Day at the Zoo',text:'Last Sunday, I went to the zoo with my friends. The weather was sunny and warm. We saw many animals there. My favorite animals were the pandas. They were black and white. They ate bamboo and slept a lot.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Sport',text:'My favorite sport is swimming. I like swimming because it is cool and fun. I go to the swimming pool every Saturday. I can swim very fast now. My coach says I am good at swimming. I want to join the swimming team.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A Trip to the Park',text:'Yesterday, I went to the park with my family. The park was big and beautiful. There were many flowers and trees. We played on the grass. My father flew a kite. My mother took many photos. We had a picnic under a big tree.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Birthday Party',text:'Yesterday was my best friend Tom\'s birthday. He was ten years old. I went to his house at 3:00 PM. There were many friends at the party. Tom\'s mother made a big chocolate cake. We sang the birthday song together.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Season',text:'My favorite season is autumn. I like autumn because the weather is cool and comfortable. The leaves turn yellow, red and orange. They look beautiful. I like to walk in the park and watch the leaves fall.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Hobby',text:'My favorite hobby is reading books. I read books every day. I like reading story books and science books. Story books are interesting. I can learn about different people and places. I usually read in my bedroom.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A Rainy Day',text:'It was Saturday morning. I looked out of the window. It was raining heavily. I couldn\'t go to the park. I was sad at first. Then my mother suggested we bake cookies together. We made chocolate cookies.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Room',text:'This is my room. It is not very big, but it is clean and tidy. There is a bed, a desk, a chair and a bookshelf in my room. My bed is next to the window. There is a blue quilt on it. My desk is near the bed.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Pet',text:'I have a pet dog. His name is Buddy. He is two years old. He is brown and white. He has a long tail. Buddy likes to play with balls. Every morning, I walk him in the park. He is very friendly.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A Visit to the Museum',text:'Last month, I visited the science museum with my class. The museum was very big. There were many interesting things to see. We saw robots and dinosaurs. My favorite was the space exhibition. I learned a lot about planets.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Weekend',text:'On weekends, I usually get up at 8:00. I have breakfast with my family. Then I do my homework. In the afternoon, I play basketball with my friends. Sometimes I go to the cinema. I always have a good time on weekends.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A Day at the Beach',text:'Last summer, my family went to the beach. The beach was beautiful. The water was blue and clear. We built sandcastles. My father taught me how to swim in the sea. We ate ice cream and collected shells.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Food',text:'My favorite food is pizza. I like pizza because it is delicious. My mother often makes pizza at home. She puts cheese, tomatoes and ham on it. Sometimes we order pizza from a restaurant. I always eat two pieces.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Trip',text:'Last week, we had a school trip to the farm. The farm was outside the city. We saw cows, sheep and chickens. We picked apples and fed the animals. The farmer showed us how to milk a cow. It was a great day.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Neighborhood',text:'I live in a quiet neighborhood. There are many trees and flowers on the street. There is a small shop near my house. I often buy snacks there. There is also a playground. Children play there every afternoon.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Morning Routine',text:'Every morning, I get up at 6:30. I brush my teeth and wash my face. Then I have breakfast. I usually eat bread and drink milk. After breakfast, I put on my school uniform and pack my bag. I leave home at 7:30.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Dream Job',text:'When I grow up, I want to be a pilot. I want to fly planes and travel to different countries. Pilots wear special uniforms and help people travel safely. I think it is an exciting job. I will study hard to make my dream come true.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A Camping Trip',text:'Last weekend, my family went camping. We drove to a mountain. We put up a tent near a lake. At night, we made a campfire. My father told us stories. We looked at the stars. It was very peaceful.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Teacher',text:'My favorite teacher is Miss Wang. She teaches us math. She is kind and patient. She always explains things clearly. When I don\'t understand, she helps me. She also tells us interesting stories.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Animal',text:'My favorite animal is the panda. Pandas are black and white. They live in China. They eat bamboo. Pandas are very cute but lazy. They sleep a lot. I hope to see real pandas one day.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Home Town',text:'I come from Chengdu. It is a big city in China. Chengdu is famous for pandas and spicy food. There are many beautiful parks. The people are friendly. I am proud of my home town.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Daily Life',text:'I am a student at Green Primary School. I get up at 6:30 every morning. I have breakfast at 7:00. Then I go to school at 7:30. School starts at 8:00. I have four classes in the morning.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A Happy Memory',text:'My happiest memory is from last summer. My family went to Hainan. We swam in the sea and ate fresh fruit. My parents and I walked on the beach every evening. We laughed a lot. I will never forget that trip.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Book',text:'My favorite book is Harry Potter. It is about a boy who learns magic. The story is exciting. I like the characters very much. I have read the book three times. I also watched the movies.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Library',text:'Our school library is on the first floor. It is big and quiet. There are thousands of books. I often borrow story books. The librarian is very nice. She helps me find good books.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Holiday',text:'Last winter holiday, I went to Harbin with my parents. It was very cold. Everything was covered in snow. We saw ice sculptures. We also tried skiing. It was my first time. I fell many times but it was fun.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Family Dinner',text:'Every Sunday, my family has dinner together. My mother cooks delicious food. My father helps set the table. We talk about our week. After dinner, we watch TV or play games. It is my favorite time.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Subject',text:'My favorite subject is science. I like it because we do experiments. Last week, we made a volcano. It was very exciting. I also like learning about animals and space. Science is fun.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Playground',text:'Our playground is behind the school building. It is big and green. There are basketball courts and a running track. We play there during break time. I usually play basketball with my friends.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Movie',text:'My favorite movie is Kung Fu Panda. It is about a panda who learns kung fu. The movie is funny and exciting. I like the music too. I have watched it five times.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A Picnic',text:'Last Sunday, my family had a picnic in the park. We brought sandwiches, fruit and juice. We sat on a blanket under a tree. We played frisbee and flew a kite. The weather was perfect.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Concert',text:'Last month, our school had a concert. Many students performed. Some sang songs. Some played instruments. I played the piano. My parents came to watch. Everyone clapped loudly.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Sports Day',text:'Last Friday was our school sports day. I ran in the 100-meter race. I was very nervous. My classmates cheered for me. I ran as fast as I could. I came second. I was very happy.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Art Class',text:'I have art class every Tuesday. I like drawing and painting. Last week, we painted a landscape. I painted a mountain and a lake. My teacher said it was beautiful. I want to be an artist.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Music Lesson',text:'I have music lessons on Wednesdays. I learn to play the piano. I practice every day. My teacher is very strict but kind. I can play some simple songs now. I hope to play a concert one day.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Festival',text:'My favorite festival is Spring Festival. We have a big dinner. We eat dumplings and fish. We wear new clothes. Children get red packets. We watch fireworks. It is the happiest time.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Garden',text:'Our school has a small garden. Students grow vegetables there. We planted tomatoes and carrots. We water them every day. When they are ready, we eat them in the cafeteria. It is fun to grow food.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Place',text:'My favorite place is the beach. I like the sound of waves. I like to walk on the sand. I collect shells. I watch the sunset. It makes me feel peaceful. I want to live near the beach.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'A New Friend',text:'Last month, a new student joined our class. Her name is Anna. She is from America. She speaks English very well. She is friendly and funny. We sit together. She teaches me English.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Club',text:'I joined the science club last year. We meet every Friday. We do experiments and make models. Last month, we made a rocket. It flew very high. I love the science club.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Homework',text:'I do my homework every day after school. I usually finish it in one hour. Math is the hardest. English is my favorite. My mother checks my homework. She helps me when I make mistakes.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Weekend Plan',text:'This weekend, I plan to visit my grandparents. They live in the countryside. I will help them in the garden. My grandmother will cook my favorite noodles. I am looking forward to it.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Shopping Trip',text:'Last Saturday, I went shopping with my mother. We bought new clothes and shoes. I tried on many things. My mother helped me choose. We also bought some books. It was a fun day.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Clothes',text:'My favorite clothes are jeans and T-shirts. They are comfortable. I wear them every day. I have a red T-shirt with a cartoon on it. It is my favorite. I wear it on weekends.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Healthy Life',text:'I try to live a healthy life. I eat fruit and vegetables every day. I drink water instead of soda. I exercise for 30 minutes. I sleep early. I feel strong and happy.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Bus',text:'My school bus is yellow. It picks me up at 7:15. The ride takes 20 minutes. I sit with my friends. We talk and laugh. Sometimes we do homework. The bus driver is very kind.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Computer',text:'I have a computer in my room. I use it for homework and games. I also watch videos. My parents let me use it for one hour a day. I know how to type and search for information.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Game',text:'My favorite game is chess. I play it with my father. It is a game of thinking. I have to plan my moves. Sometimes I win. Sometimes I lose. But I always learn something.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Cooking',text:'I like cooking. I learned from my mother. I can make scrambled eggs and fried rice. Last week, I made a cake for my mother\'s birthday. She was very surprised. Cooking is fun.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Cleaning Day',text:'Every Saturday is cleaning day. I help my mother clean the house. I sweep the floor and dust the furniture. I also clean my room. After cleaning, the house looks nice.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Study Plan',text:'I have a study plan. I study math on Monday and Wednesday. I study English on Tuesday and Thursday. On Friday, I review everything. On weekends, I read books. This plan helps me learn better.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Music',text:'I like pop music. My favorite singer is Taylor Swift. Her songs are beautiful. I listen to music when I do homework. It helps me relax. I also like classical music.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Uniform',text:'Our school uniform is blue and white. Boys wear blue pants. Girls wear blue skirts. We wear white shirts. We must wear the uniform every day. I think it looks neat.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Lunch Time',text:'Lunch time is at 12:00. I eat in the school cafeteria. The food is good. I usually have rice, meat and vegetables. Sometimes I have noodles. I eat with my friends.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Drink',text:'My favorite drink is orange juice. It is sweet and healthy. I drink it every morning. My mother makes fresh juice at home. Sometimes I drink milk. It makes me strong.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Bedtime Story',text:'Every night, my mother tells me a story before bed. She tells me fairy tales and adventure stories. My favorite is about a brave knight. The stories help me sleep.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Morning Exercise',text:'I do morning exercise every day. I run around the block. It takes 10 minutes. It wakes me up. It makes me strong. I have been doing it for two years.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Family Photo',text:'We have a big family photo on the wall. It was taken last year. Everyone is smiling. My father is holding my little sister. I am standing next to my mother. It is a happy memory.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Gate',text:'Our school gate is big and red. There are two stone lions at the gate. Students enter through the gate every morning. There is a security guard. He says hello to everyone.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Toy',text:'My favorite toy is a teddy bear. I have had it since I was three. It is brown and soft. I sleep with it every night. It makes me feel safe. I will keep it forever.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My New Shoes',text:'I got new shoes yesterday. They are white and blue. They are very comfortable. I wear them to school. My friends say they look cool. I am very happy with them.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Bag',text:'My school bag is blue. It has many pockets. I put my books and pencils in it. It is heavy but strong. My mother bought it for me. I take good care of it.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Pencil Case',text:'My pencil case is red. It has a cartoon picture on it. I keep pencils, pens, erasers and a ruler in it. It is always in my bag. I need it for every class.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Color',text:'My favorite color is blue. It is the color of the sky and the sea. It makes me feel calm. Many of my things are blue. My room is painted light blue.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Number',text:'My favorite number is seven. It is lucky. There are seven days in a week. There are seven colors in a rainbow. I was born on the seventh of July.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Lucky Day',text:'My lucky day was last Tuesday. I found 10 yuan on the street. I won a prize in class. My teacher praised me. My mother cooked my favorite dinner. Everything went well.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Flower',text:'My favorite flower is the rose. Roses are red and beautiful. They smell sweet. My mother grows roses in our garden. I help her water them. Roses make our garden pretty.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Bell',text:'Our school bell rings at 8:00, 12:00 and 4:00. It is loud and clear. When it rings, we go to class or go home. I like the sound of the bell. It means break time.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Classroom',text:'My classroom is on the second floor. It has 30 desks and chairs. There is a big blackboard. The walls are white. There are many pictures on the wall. The window is big and bright.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Desk',text:'My desk is brown. I keep my books and pencils in it. I put a name card on it. I clean it every Friday. My desk is near the window. I can see the playground.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Blackboard',text:'Our blackboard is green. The teacher writes on it. We copy notes from it. Sometimes we draw pictures on it. After class, we clean it. The blackboard is important.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Lunch',text:'School lunch is at 12:00. We eat in the cafeteria. There are many choices. I usually have rice, meat and vegetables. The food is healthy. I eat everything on my plate.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Fruit',text:'My favorite fruit is watermelon. It is sweet and juicy. I eat it in summer. My father buys it from the market. We eat it together after dinner. It is refreshing.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Vegetable',text:'My favorite vegetable is tomato. It is red and round. I eat it in salad and soup. It is healthy. My mother grows tomatoes in our garden. They taste fresh.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Drink',text:'My favorite drink is orange juice. It is sweet and healthy. I drink it every morning. My mother makes fresh juice at home. Sometimes I drink milk. It makes me strong.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Rule',text:'Our school has many rules. We must be on time. We must wear the uniform. We must be polite. We must not run in the hallway. Rules help us stay safe.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Map',text:'There is a map of our school at the gate. It shows all the buildings. The library is next to the office. The playground is behind the classroom building. The cafeteria is on the first floor.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Flag',text:'Every morning, we raise the school flag. It is red and yellow. We stand in line. We sing the school song. The flag ceremony is important. It makes us proud.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Song',text:'Our school song is about learning and friendship. We sing it every Monday. The music is happy. The words are easy. I know the song by heart. It makes me happy.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My School Tree',text:'There is a big tree in front of our school. It is very old. It has green leaves. Birds live in it. We sit under it at break time. It gives us shade.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Story',text:'My favorite story is Cinderella. It is about a kind girl. She goes to a ball. She meets a prince. The story teaches me to be kind. I have read it many times.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Poem',text:'My favorite poem is about spring. It describes flowers and birds. The words are beautiful. I learned it in Chinese class. I can recite it. It makes me feel peaceful.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Cartoon',text:'My favorite cartoon is Tom and Jerry. It is funny. Tom is a cat. Jerry is a mouse. They chase each other. I laugh every time I watch it. I watch it with my brother.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Star',text:'My favorite star is the North Star. It is very bright. It helps people find direction. I learned about it in science class. I look for it at night. It is beautiful.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Planet',text:'My favorite planet is Mars. It is red. Scientists think there might be water on it. I want to be an astronaut. I want to visit Mars one day.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Weather',text:'My favorite weather is sunny. I like sunshine. It makes me happy. I can play outside. I can go to the park. Sunny days are the best.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Cloud',text:'I like watching clouds. Some clouds look like animals. Some look like ships. I imagine stories about them. Clouds are white and soft. They float in the sky.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+  {title:'My Favorite Rain',text:'I like summer rain. It is warm. It smells fresh. The plants grow after rain. I like to watch raindrops. I sometimes play in the rain. It is fun.',qs:[{q:'Who is this passage about?',opts:['I','A cat','A dog','A bird'],ans:0},{q:'Where does the story happen?',opts:['At school','At home','In a park','At the zoo'],ans:1},{q:'What does the person like to do?',opts:['Play games','Read books','Watch TV','Go shopping'],ans:2},{q:'How does the person feel?',opts:['Happy','Sad','Angry','Tired'],ans:0},{q:'Is this a true story?',opts:['Yes, it is','No, it is not','Maybe','Not sure'],ans:1}]},
+];
+r readingExercises = [
   {
     title:'My Best Friend',
     text:'My best friend is Lily. She is ten years old. She has long black hair and big eyes. She likes reading books and playing the piano. Every weekend, we go to the park together. We fly kites and play games. Lily is very kind. She always helps me with my homework. I like her very much.',
@@ -2772,6 +3107,108 @@ var ketSpeakingPart2Practice = [
 ];
 
 var mockQuestions = [
+  {q:'I usually ______ (go) to school at 8:00.',opts:['go','goes','going','went'],ans:0},
+  {q:'She ______ (watch) TV every evening.',opts:['watch','watchs','watches','watching'],ans:2},
+  {q:'He ______ (not like) vegetables.',opts:['don\'t like','doesn\'t like','not likes','isn\'t like'],ans:1},
+  {q:'______ she ______ (read) books every day?',opts:['Do; read','Does; reads','Is; reading','Are; reading'],ans:0},
+  {q:'My brother ______ (play) basketball on Sundays.',opts:['play','plays','playing','played'],ans:1},
+  {q:'They ______ (not speak) French.',opts:['don\'t speak','doesn\'t speak','not speak','aren\'t speak'],ans:0},
+  {q:'Water ______ at 100 degrees.',opts:['boil','boils','boiling','boiled'],ans:1},
+  {q:'The sun ______ in the east.',opts:['rise','rises','rising','rose'],ans:1},
+  {q:'I ______ (be) a student.',opts:['am','is','are','be'],ans:0},
+  {q:'She ______ (be) a doctor.',opts:['am','is','are','be'],ans:1},
+  {q:'They ______ (be) my friends.',opts:['am','is','are','be'],ans:2},
+  {q:'My cat ______ (sleep) all day.',opts:['sleep','sleeps','sleeping','slept'],ans:1},
+  {q:'We ______ (have) lunch at 12:00.',opts:['have','has','having','had'],ans:0},
+  {q:'The shop ______ at 9:00 every morning.',opts:['open','opens','opening','opened'],ans:1},
+  {q:'I always ______ (brush) my teeth before bed.',opts:['brush','brushes','brushing','brushed'],ans:0},
+  {q:'She ______ (study) English every day.',opts:['study','studies','studying','studied'],ans:1},
+  {q:'Birds ______ (fly) in the sky.',opts:['fly','flys','flies','flying'],ans:2},
+  {q:'He ______ (do) his homework after school.',opts:['do','does','doing','did'],ans:1},
+  {q:'My parents ______ (live) in Beijing.',opts:['live','lives','living','lived'],ans:0},
+  {q:'The train ______ at 8:00 every morning.',opts:['leave','leaves','left','leaving'],ans:1},
+  {q:'Look! The children ______ (play) football now.',opts:['play','plays','is playing','are playing'],ans:3},
+  {q:'She ______ (watch) TV at the moment.',opts:['watch','watches','is watching','watched'],ans:2},
+  {q:'Listen! Someone ______ (sing) in the next room.',opts:['sing','sings','is singing','are singing'],ans:2},
+  {q:'______ you ______ (wait) for the bus?',opts:['Do; wait','Are; waiting','Is; waiting','Do; waiting'],ans:1},
+  {q:'I ______ (not read) a book right now.',opts:['don\'t read','am not reading','is not reading','not reading'],ans:1},
+  {q:'They ______ (have) dinner now.',opts:['have','has','are having','is having'],ans:2},
+  {q:'Be quiet! The baby ______ (sleep).',opts:['sleep','sleeps','is sleeping','are sleeping'],ans:2},
+  {q:'What ______ you ______ (do)?',opts:['do; do','are; doing','is; doing','do; doing'],ans:1},
+  {q:'The dog ______ (run) in the garden.',opts:['run','runs','is running','are running'],ans:2},
+  {q:'We ______ (play) games now. Please join us.',opts:['play','plays','are playing','is playing'],ans:2},
+  {q:'He ______ (write) a letter at the moment.',opts:['write','writes','is writing','are writing'],ans:2},
+  {q:'The students ______ (not listen) to the teacher.',opts:['don\'t listen','aren\'t listening','isn\'t listening','not listening'],ans:1},
+  {q:'I ______ (go) to the zoo yesterday.',opts:['go','goes','went','going'],ans:2},
+  {q:'She ______ (buy) a new dress last week.',opts:['buy','buys','buying','bought'],ans:3},
+  {q:'They ______ (not come) to the party.',opts:['don\'t come','didn\'t come','not came','not coming'],ans:1},
+  {q:'______ he ______ (visit) his grandma last Sunday?',opts:['Do; visit','Did; visit','Does; visit','Is; visiting'],ans:1},
+  {q:'We ______ (have) a great time at the party last night.',opts:['have','has','had','having'],ans:2},
+  {q:'I ______ (eat) an apple this morning.',opts:['eat','eats','eating','ate'],ans:3},
+  {q:'She ______ (write) a letter to her friend.',opts:['write','writes','writing','wrote'],ans:3},
+  {q:'He ______ (take) the bus to school.',opts:['take','takes','taking','took'],ans:3},
+  {q:'We ______ (see) a film yesterday.',opts:['see','sees','seeing','saw'],ans:3},
+  {q:'I ______ (meet) my best friend last summer.',opts:['meet','meets','meeting','met'],ans:3},
+  {q:'She ______ (find) her keys under the sofa.',opts:['find','finds','finding','found'],ans:3},
+  {q:'They ______ (swim) in the lake.',opts:['swim','swims','swimming','swam'],ans:3},
+  {q:'He ______ (give) me a book for my birthday.',opts:['give','gives','giving','gave'],ans:3},
+  {q:'I ______ (know) the answer.',opts:['know','knows','knowing','knew'],ans:3},
+  {q:'She ______ (make) a cake for her mother.',opts:['make','makes','making','made'],ans:3},
+  {q:'We ______ (begin) our class at 8:00 yesterday.',opts:['begin','begins','beginning','began'],ans:3},
+  {q:'I ______ (go) to the park tomorrow.',opts:['go','will go','going','went'],ans:1},
+  {q:'She ______ (visit) her grandparents next week.',opts:['visits','will visit','is visiting','visited'],ans:1},
+  {q:'We ______ to the beach if it is sunny tomorrow.',opts:['go','will go','went','going'],ans:1},
+  {q:'______ you ______ (help) me with my homework?',opts:['Do; help','Will; help','Are; helping','Did; help'],ans:1},
+  {q:'I think it ______ (rain) this afternoon.',opts:['rain','rains','will rain','is raining'],ans:2},
+  {q:'They ______ (not come) to the meeting.',opts:['don\'t come','won\'t come','not come','didn\'t come'],ans:1},
+  {q:'I ______ (be) a doctor when I grow up.',opts:['am','will be','am being','was'],ans:1},
+  {q:'Next year, we ______ (move) to a new house.',opts:['move','will move','are moving','moved'],ans:1},
+  {q:'I ______ (call) you tonight.',opts:['call','will call','calling','called'],ans:1},
+  {q:'Don\'t worry. I ______ (finish) it soon.',opts:['finish','will finish','am finishing','finished'],ans:1},
+  {q:'I ______ (finish) my homework.',opts:['finish','finished','have finished','has finished'],ans:2},
+  {q:'She ______ (not see) that film before.',opts:['doesn\'t see','didn\'t see','hasn\'t seen','haven\'t seen'],ans:2},
+  {q:'______ you ever ______ (eat) sushi?',opts:['Do; eat','Did; eat','Have; eaten','Has; eaten'],ans:2},
+  {q:'They ______ (live) here for ten years.',opts:['live','lived','have lived','has lived'],ans:2},
+  {q:'I ______ (just / finish) my lunch.',opts:['just finish','just finished','have just finished','has just finished'],ans:2},
+  {q:'She ______ (already / leave).',opts:['already leaves','already left','has already left','have already left'],ans:2},
+  {q:'We ______ (never / visit) Paris.',opts:['never visit','never visited','have never visited','has never visited'],ans:2},
+  {q:'He ______ (lose) his keys. He can\'t find them.',opts:['lose','lost','has lost','have lost'],ans:2},
+  {q:'I ______ (read) this book three times.',opts:['read','am reading','have read','has read'],ans:2},
+  {q:'______ she ______ (arrive) yet?',opts:['Does; arrive','Did; arrive','Has; arrived','Is; arriving'],ans:2},
+  {q:'My birthday is ______ July.',opts:['in','on','at','to'],ans:0},
+  {q:'I have classes ______ Monday.',opts:['in','on','at','to'],ans:1},
+  {q:'I get up ______ 7 o\'clock.',opts:['in','on','at','to'],ans:2},
+  {q:'I will meet you ______ Christmas Day.',opts:['in','on','at','to'],ans:1},
+  {q:'My sister was born ______ 2015.',opts:['in','on','at','to'],ans:0},
+  {q:'The book is ______ the table.',opts:['in','on','at','to'],ans:1},
+  {q:'The cat is sleeping ______ the sofa.',opts:['in','on','under','at'],ans:1},
+  {q:'The children are playing ______ the garden.',opts:['in','on','at','to'],ans:0},
+  {q:'The cat is hiding ______ the bed.',opts:['in','on','under','at'],ans:2},
+  {q:'The flowers are ______ the garden.',opts:['in','on','at','to'],ans:0},
+  {q:'I am interested ______ learning French.',opts:['in','on','at','to'],ans:0},
+  {q:'He is good ______ singing.',opts:['in','on','at','to'],ans:2},
+  {q:'She is afraid ______ dogs.',opts:['in','on','of','at'],ans:2},
+  {q:'The children are looking forward ______ Christmas.',opts:['in','on','to','at'],ans:2},
+  {q:'I prefer coffee ______ tea.',opts:['than','to','from','with'],ans:1},
+  {q:'The book is ______ the table and the chair.',opts:['in','on','between','at'],ans:2},
+  {q:'She is ______ the phone.',opts:['in','on','at','to'],ans:1},
+  {q:'I prefer tea ______ coffee.',opts:['than','to','from','with'],ans:1},
+  {q:'The train leaves ______ 9:15 AM.',opts:['in','on','at','to'],ans:2},
+  {q:'We have lunch ______ noon.',opts:['in','on','at','to'],ans:2},
+  {q:'The blue bag is ______ than the red one.',opts:['heavy','heavier','heaviest','more heavy'],ans:1},
+  {q:'She is ______ than her sister.',opts:['tall','taller','tallest','more tall'],ans:1},
+  {q:'She is the ______ girl in the class.',opts:['tall','taller','tallest','more tall'],ans:2},
+  {q:'This book is ______ than that one.',opts:['interesting','more interesting','most interesting','interested'],ans:1},
+  {q:'This is the ______ movie I have ever seen.',opts:['good','better','best','more good'],ans:2},
+  {q:'The weather is getting ______ .',opts:['cold','colder','coldest','more cold'],ans:1},
+  {q:'She has ______ hair than her mother.',opts:['long','longer','longest','more long'],ans:1},
+  {q:'She is ______ than her brother.',opts:['old','older','oldest','more old'],ans:1},
+  {q:'This is ______ book I have ever read.',opts:['good','better','the best','the better'],ans:2},
+  {q:'The weather is ______ today than yesterday.',opts:['bad','worse','worst','more bad'],ans:1},
+  {q:'He is ______ tall ______ walk through the door.',opts:['so; to','too; to','very; to','enough; to'],ans:1},
+  {q:'She is ______ young to drive a car.',opts:['so','too','very','enough'],ans:1},
+];
+r mockQuestions = [
   {q:'I usually ______ to school at 8:00.',opts:['go','goes','going','went'],ans:0},
   {q:'She ______ a new bike yesterday.',opts:['buy','buys','buying','bought'],ans:3},
   {q:'Look! The cat ______ on the bed.',opts:['sleep','sleeps','is sleeping','sleeping'],ans:2},
@@ -2890,18 +3327,114 @@ var mockQuestions = [
 
 var listenNumbers = ['13','15','22','30','35','42','50','56','64','77','80','88','91','100','106','120','135','200','333','500','21','24','27','31','33','36','38','41','44','47','52','55','58','61','66','69','72','75','82','85','90','93','95','99','102','108','111','115','118','125'];
 var listenTimes = ['7:00','7:30','8:15','9:00','10:30','12:00','2:45','3:30','5:00','6:15','9:00','11:45','1:00','1:30','2:00','2:30','4:00','4:30','5:30','7:45','8:00','8:30','10:00','10:45','11:00','11:30','12:30','1:15','2:15','3:45'];
-var listenDirections = [
-  {text:'Go straight and turn left. The library is on your right.',opts:['Go straight, turn left','Go straight, turn right','Turn left, turn right','Turn right, go straight'],ans:0},
-  {text:'Turn right at the traffic lights. The shop is next to the bank.',opts:['Opposite the bank','Next to the bank','Between the bank and school','Behind the bank'],ans:1},
-  {text:'Go past the cinema, then turn left. The hospital is on your left.',opts:['On the right','On the left','Next to the cinema','Opposite the cinema'],ans:1},
-  {text:'Go straight ahead, then turn right at the corner. The bank is on your left.',opts:['On the right','On the left','Next to the corner','Behind the bank'],ans:1},
-  {text:'Take the first left, then go past the post office. The cinema is opposite the post office.',opts:['Next to the post office','Opposite the post office','Behind the post office','In front of the post office'],ans:1},
-  {text:'Walk along this road until you see a big tree. Turn left there. The school is behind the tree.',opts:['In front of the tree','Behind the tree','Next to the tree','Opposite the tree'],ans:1},
-  {text:'Cross the bridge, then turn right. The museum is between the park and the library.',opts:['Opposite the park','Between the park and library','Next to the bridge','Behind the library'],ans:1},
-  {text:'Go past the bus stop, then turn left. The hospital is next to the supermarket.',opts:['Opposite the supermarket','Next to the supermarket','Behind the bus stop','In front of the bus stop'],ans:1},
-  {text:'Walk down the street and take the second right. The restaurant is at the end of the road.',opts:['At the beginning','At the end','In the middle','On the left'],ans:1},
-  {text:'Turn left at the traffic lights, then go straight. The police station is on the right, next to the fire station.',opts:['On the left','On the right','Next to the fire station','Opposite the traffic lights'],ans:2}
+var listenDialogues = [
+  {text:'A: Hello! What do you think about shopping? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Shopping','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about school? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['School','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about family? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Family','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about restaurant? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Restaurant','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about travel? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Travel','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about sports? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Sports','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about hobbies? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Hobbies','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about weather? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Weather','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about birthday? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Birthday','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about holiday? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Holiday','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about movies? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Movies','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about music? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Music','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about books? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Books','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about food? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Food','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about pets? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Pets','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about transport? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Transport','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about health? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Health','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about clothes? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Clothes','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about home? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Home','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about friends? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Friends','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about weekend? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Weekend','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about morning? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Morning','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about evening? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Evening','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about school trip? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['School trip','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about camping? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Camping','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about zoo? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Zoo','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about park? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Park','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about beach? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Beach','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about library? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Library','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about museum? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Museum','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about concert? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Concert','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about party? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Party','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about shopping mall? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Shopping mall','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about hospital? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Hospital','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about bank? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Bank','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about post office? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Post office','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about police station? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Police station','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about fire station? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Fire station','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about airport? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Airport','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about train station? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Train station','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about hotel? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Hotel','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about restaurant? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Restaurant','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about cafe? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Cafe','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about market? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Market','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about supermarket? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Supermarket','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about bakery? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Bakery','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about butcher? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Butcher','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about bookshop? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Bookshop','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about cinema? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Cinema','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about theatre? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Theatre','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about gallery? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Gallery','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about stadium? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Stadium','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about gym? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Gym','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about swimming pool? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Swimming pool','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about playground? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Playground','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about garden? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Garden','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about farm? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Farm','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about mountain? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Mountain','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about lake? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Lake','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about river? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['River','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about sea? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Sea','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about forest? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Forest','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about desert? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Desert','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about island? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Island','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about city? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['City','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about town? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Town','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about village? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Village','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about street? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Street','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about bridge? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Bridge','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about tunnel? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Tunnel','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about road? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Road','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about avenue? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Avenue','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about square? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Square','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about station? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Station','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about harbour? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Harbour','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about port? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Port','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about factory? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Factory','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about office? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Office','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about tower? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Tower','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about statue? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Statue','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about fountain? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Fountain','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about temple? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Temple','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about church? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Church','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about mosque? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Mosque','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about university? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['University','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about college? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['College','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about school? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['School','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about classroom? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Classroom','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about library? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Library','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about canteen? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Canteen','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about office? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Office','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about hall? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Hall','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about corridor? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Corridor','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about gate? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Gate','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about fence? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Fence','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about wall? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Wall','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about roof? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Roof','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about floor? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Floor','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about door? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Door','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about window? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Window','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about stairs? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Stairs','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about lift? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Lift','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about garden? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Garden','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about yard? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Yard','Weather','Food','School'],ans:0},
+  {text:'A: Hello! What do you think about balcony? B: I think it is great! I really enjoy it. A: Me too! It is my favorite.',question:'What are they talking about?',opts:['Balcony','Weather','Food','School'],ans:0},
 ];
+
 
 var npcMessages = {
   home: '欢迎来到冒险者营地！这里是你的大本营，查看任务进度和快速传送到各个学习地点。',
@@ -3183,38 +3716,68 @@ function saveProgress(){
   alert('✅ 进度已保存！可以在首页快速通道继续学习。');
 }
 
+var currentGrammarFilter = 'all';
+function filterGrammar(cat){
+  currentGrammarFilter = cat;
+  var btns = document.querySelectorAll('[data-gfilter]');
+  for(var i = 0; i < btns.length; i++){
+    btns[i].style.background = (btns[i].dataset.gfilter === cat) ? '#5a8c3a' : '#c6c6c6';
+    btns[i].style.color = (btns[i].dataset.gfilter === cat) ? '#fff' : '#222';
+  }
+  renderGrammar();
+}
+
 function renderGrammar(){
   var html = '';
   var done = 0;
-  for(var i=0;i<grammarExercises.length;i++){
-    var ex = grammarExercises[i];
-    var isDone = state.grammarDone.indexOf(i) >= 0;
-    if(isDone) done++;
-    html += '<div class="stone-card">';
-    html += '<div style="font-weight:bold;color:#fff;margin-bottom:10px">'+(i+1)+'. '+ex.q+'</div>';
-    for(var j=0;j<ex.opts.length;j++){
-      var cls = 'choice-btn';
-      if(isDone){
-        if(j === ex.ans) cls += ' correct';
-        else if(state.grammarLastAnswer && state.grammarLastAnswer[i] === j && j !== ex.ans) cls += ' wrong';
-      }
-      html += '<button class="'+cls+'" onclick="answerGrammar('+i+','+j+',this)" '+(isDone?'disabled':'')+'>'+String.fromCharCode(65+j)+'. '+ex.opts[j]+'</button>';
-    }
-    html += '<div style="font-size:12px;color:#aaa;margin-top:8px;'+(isDone?'':'display:none')+'" id="explain_'+i+'">'+ex.explain+'</div>';
+  var total = 0;
+  
+  var categories = currentGrammarFilter === 'all' ? Object.keys(grammarByCategory) : [currentGrammarFilter];
+  
+  for(var c = 0; c < categories.length; c++){
+    var cat = categories[c];
+    var catQuestions = grammarByCategory[cat] || [];
+    if(catQuestions.length === 0) continue;
+    
+    html += '<div class="crafting-table" style="margin-bottom:10px">';
+    html += '<div class="title" style="color:#f0c850;font-size:14px">📂 ' + cat + ' (' + catQuestions.length + '题)</div>';
     html += '</div>';
+    
+    for(var i = 0; i < catQuestions.length; i++){
+      var ex = catQuestions[i];
+      var globalIdx = grammarExercises.indexOf(ex);
+      if(globalIdx < 0) globalIdx = i;
+      var isDone = state.grammarDone.indexOf(globalIdx) >= 0;
+      if(isDone) done++;
+      total++;
+      
+      html += '<div class="stone-card">';
+      html += '<div style="font-weight:bold;color:#fff;margin-bottom:10px">' + (i+1) + '. ' + ex.q + '</div>';
+      for(var j = 0; j < ex.opts.length; j++){
+        var cls = 'choice-btn';
+        if(isDone){
+          if(j === ex.ans) cls += ' correct';
+          else if(state.grammarLastAnswer && state.grammarLastAnswer[globalIdx] === j && j !== ex.ans) cls += ' wrong';
+        }
+        html += '<button class="' + cls + '" onclick="answerGrammar(' + globalIdx + ',' + j + ',this)" ' + (isDone ? 'disabled' : '') + '>' + String.fromCharCode(65+j) + '. ' + ex.opts[j] + '</button>';
+      }
+      html += '<div style="font-size:12px;color:#aaa;margin-top:8px;' + (isDone ? '' : 'display:none') + '" id="explain_' + globalIdx + '">' + ex.explain + '</div>';
+      html += '</div>';
+    }
   }
+  
   document.getElementById('grammarExercises').innerHTML = html;
   
   // 进度提示
-  var pct = Math.round(done / grammarExercises.length * 100);
+  var pct = total > 0 ? Math.round(done / total * 100) : 0;
   var progressHtml = '<div class="stone-card" style="text-align:center">';
   progressHtml += '<div style="font-size:14px;color:#f0c850;margin-bottom:8px">语法工坊进度</div>';
-  progressHtml += '<div class="xp-bar" style="margin:4px 16px;height:16px"><div class="xp-fill" style="width:'+pct+'%;height:100%"></div></div>';
-  progressHtml += '<div style="font-size:12px;color:#aaa">已完成 ' + done + ' / ' + grammarExercises.length + ' 题 (' + pct + '%)</div>';
+  progressHtml += '<div class="xp-bar" style="margin:4px 16px;height:16px"><div class="xp-fill" style="width:' + pct + '%;height:100%"></div></div>';
+  progressHtml += '<div style="font-size:12px;color:#aaa">已完成 ' + done + ' / ' + total + ' 题 (' + pct + '%)</div>';
   progressHtml += '<div style="display:flex;gap:8px;justify-content:center;margin-top:10px">';
   progressHtml += '<button class="mc-btn green" onclick="saveProgress()">💾 保存进度</button>';
   if(done > 0){
-    progressHtml += '<button class="mc-btn" onclick="if(confirm(\'确定重置语法进度？\')){state.grammarDone=[];saveState();renderGrammar();updateStats();renderQuickTeleport();}">🔄 重置</button>';
+    progressHtml += '<button class="mc-btn" onclick="if(confirm(\'确定重置语法进度？\')){state.grammarDone=[];state.grammarLastAnswer={};saveState();renderGrammar();updateStats();renderQuickTeleport();}">🔄 重置</button>';
   }
   progressHtml += '</div></div>';
   
@@ -3803,6 +4366,83 @@ function renderListening(){
   if(listenEl){
     listenEl.parentElement.insertAdjacentHTML('beforebegin', progressHtml);
   }
+  
+  // 渲染对话练习
+  renderListenDialogues();
+}
+
+function renderListenDialogues(){
+  var html = '';
+  var done = 0;
+  for(var i = 0; i < listenDialogues.length; i++){
+    var d = listenDialogues[i];
+    var isDone = state.listenDialogDone && state.listenDialogDone.indexOf(i) >= 0;
+    if(isDone) done++;
+    html += '<div class="stone-card">';
+    html += '<div style="font-size:12px;color:#aaa;margin-bottom:6px">对话 ' + (i+1) + ' / ' + listenDialogues.length + '</div>';
+    html += '<div style="font-size:13px;color:#ddd;margin-bottom:8px;font-style:italic">' + d.text + '</div>';
+    html += '<button class="audio-play-btn" onclick="playDialogue(' + i + ')" style="margin-bottom:10px">';
+    html += '<span class="play-icon">▶️</span><span>播放对话</span>';
+    html += '</button>';
+    html += '<div class="question-text" style="margin-bottom:8px">' + d.question + '</div>';
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+    for(var j = 0; j < d.opts.length; j++){
+      var cls = 'mc-btn';
+      if(isDone){
+        if(j === d.ans) cls += ' green';
+        else if(state.listenDialogLastAnswer && state.listenDialogLastAnswer[i] === j && j !== d.ans) cls = 'mc-btn red';
+      }
+      html += '<button class="' + cls + '" onclick="checkDialogue(' + i + ',' + j + ')" ' + (isDone ? 'disabled' : '') + '>' + d.opts[j] + '</button>';
+    }
+    html += '</div>';
+    html += '<div id="dialogResult_' + i + '" style="margin-top:8px;font-size:14px;font-weight:bold"></div>';
+    html += '</div>';
+  }
+  document.getElementById('listenDialogArea').innerHTML = html;
+  
+  // 进度提示
+  var pct = listenDialogues.length > 0 ? Math.round(done / listenDialogues.length * 100) : 0;
+  var progressHtml = '<div class="stone-card" style="text-align:center">';
+  progressHtml += '<div style="font-size:14px;color:#c026d3;margin-bottom:8px">听力对话进度</div>';
+  progressHtml += '<div class="xp-bar" style="margin:4px 16px;height:16px"><div class="xp-fill" style="width:' + pct + '%;height:100%"></div></div>';
+  progressHtml += '<div style="font-size:12px;color:#aaa">已完成 ' + done + ' / ' + listenDialogues.length + ' 题 (' + pct + '%)</div>';
+  progressHtml += '<div style="display:flex;gap:8px;justify-content:center;margin-top:10px">';
+  progressHtml += '<button class="mc-btn green" onclick="saveProgress()">💾 保存进度</button>';
+  if(done > 0){
+    progressHtml += '<button class="mc-btn" onclick="if(confirm(\'确定重置听力对话进度？\')){state.listenDialogDone=[];state.listenDialogLastAnswer={};saveState();renderListenDialogues();updateStats();renderQuickTeleport();}">🔄 重置</button>';
+  }
+  progressHtml += '</div></div>';
+  var listenEl = document.getElementById('listenDialogArea');
+  if(listenEl){
+    listenEl.insertAdjacentHTML('beforebegin', progressHtml);
+  }
+}
+
+function playDialogue(idx){
+  var d = listenDialogues[idx];
+  speak(d.text);
+}
+
+function checkDialogue(idx, opt){
+  var d = listenDialogues[idx];
+  var correct = opt === d.ans;
+  var el = document.getElementById('dialogResult_' + idx);
+  if(correct){
+    el.innerHTML = '<span class="result-feedback correct">✔ 正确！</span>';
+  } else {
+    el.innerHTML = '<span class="result-feedback wrong">❌ 错误！正确答案是：' + d.opts[d.ans] + '</span>';
+  }
+  if(!state.listenDialogDone) state.listenDialogDone = [];
+  if(!state.listenDialogLastAnswer) state.listenDialogLastAnswer = {};
+  state.listenDialogDone.push(idx);
+  state.listenDialogLastAnswer[idx] = opt;
+  if(correct){
+    state.stars += 1;
+  }
+  saveState();
+  updateStats();
+  renderQuickTeleport();
+  renderListenDialogues();
 }
 
 var mockAnswers = [];
@@ -4058,6 +4698,7 @@ function init(){
   renderReading();
   renderWriting();
   renderSpeaking();
+  renderListening();
   renderMockStart();
   renderProgress();
   updateStats();
