@@ -523,6 +523,311 @@ body {
 @media (min-width: 600px) {
   .inventory { grid-template-columns: repeat(4, 1fr); }
 }
+
+/* ===== 单词练习模式 ===== */
+.practice-card {
+  background: #2a2a2a;
+  border: 4px solid #555;
+  border-top-color: #777;
+  border-left-color: #777;
+  padding: 16px;
+  margin: 12px 16px;
+}
+.practice-card .title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f0c850;
+  text-shadow: 2px 2px 0 #000;
+  margin-bottom: 10px;
+}
+.practice-card .subtitle {
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 12px;
+}
+.practice-mode-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #5a8c3a;
+  border: 4px solid #3a5c22;
+  border-top-color: #8bc96b;
+  border-left-color: #8bc96b;
+  border-bottom-color: #2a4a15;
+  border-right-color: #2a4a15;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 6px 0;
+  width: 100%;
+}
+.practice-mode-btn:active {
+  border-top-color: #2a4a15;
+  border-left-color: #2a4a15;
+  border-bottom-color: #8bc96b;
+  border-right-color: #8bc96b;
+  transform: translateY(2px);
+}
+.practice-mode-btn.blue {
+  background: #3a6ea5;
+  border-color: #224a75;
+  border-top-color: #6b9ed6;
+  border-left-color: #6b9ed6;
+  border-bottom-color: #1a3a55;
+  border-right-color: #1a3a55;
+}
+.practice-mode-btn.blue:active {
+  border-top-color: #1a3a55;
+  border-left-color: #1a3a55;
+  border-bottom-color: #6b9ed6;
+  border-right-color: #6b9ed6;
+}
+.practice-mode-btn.red {
+  background: #a53a3a;
+  border-color: #752222;
+  border-top-color: #d66b6b;
+  border-left-color: #d66b6b;
+  border-bottom-color: #551515;
+  border-right-color: #551515;
+}
+.practice-mode-btn.red:active {
+  border-top-color: #551515;
+  border-left-color: #551515;
+  border-bottom-color: #d66b6b;
+  border-right-color: #d66b6b;
+}
+.practice-mode-btn.orange {
+  background: #d4a017;
+  border-color: #8b6914;
+  border-top-color: #f0c850;
+  border-left-color: #f0c850;
+  border-bottom-color: #5a4510;
+  border-right-color: #5a4510;
+  color: #222;
+}
+.practice-mode-btn.orange:active {
+  border-top-color: #5a4510;
+  border-left-color: #5a4510;
+  border-bottom-color: #f0c850;
+  border-right-color: #f0c850;
+}
+.practice-question {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+  text-align: center;
+  margin: 16px 0;
+  padding: 16px;
+  background: #222;
+  border: 4px solid #555;
+}
+.practice-question .phonetic-hint {
+  font-size: 14px;
+  color: #aaa;
+  font-family: Georgia, serif;
+  margin-top: 6px;
+}
+.practice-question .mean-hint {
+  font-size: 16px;
+  color: #f0c850;
+  margin-top: 6px;
+}
+.practice-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+.practice-option {
+  padding: 12px;
+  background: #c6c6c6;
+  border: 4px solid #373737;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-bottom-color: #555;
+  border-right-color: #555;
+  color: #222;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+.practice-option:active {
+  border-top-color: #555;
+  border-left-color: #555;
+  border-bottom-color: #fff;
+  border-right-color: #fff;
+  transform: translateY(2px);
+}
+.practice-option.correct {
+  background: #5a8c3a;
+  color: #fff;
+  border-color: #3a5c22;
+}
+.practice-option.wrong {
+  background: #a53a3a;
+  color: #fff;
+  border-color: #752222;
+}
+.practice-option.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+.practice-spell-input {
+  width: 100%;
+  padding: 12px;
+  background: #222;
+  border: 4px solid #555;
+  border-top-color: #777;
+  border-left-color: #777;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  text-align: center;
+  margin: 12px 0;
+}
+.practice-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 16px;
+  font-size: 12px;
+  color: #aaa;
+}
+.practice-progress .bar {
+  flex: 1;
+  height: 12px;
+  background: #222;
+  border: 2px solid #555;
+  margin: 0 10px;
+  position: relative;
+}
+.practice-progress .bar-fill {
+  height: 100%;
+  background: #f0c850;
+  transition: width 0.3s;
+}
+.practice-stars {
+  font-size: 20px;
+  text-align: center;
+  margin: 8px 0;
+}
+.practice-result {
+  text-align: center;
+  padding: 20px;
+}
+.practice-result .big-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f0c850;
+  text-shadow: 2px 2px 0 #000;
+  margin-bottom: 10px;
+}
+.practice-result .stars-earned {
+  font-size: 32px;
+  margin: 12px 0;
+}
+.practice-level-info {
+  background: #222;
+  border: 4px solid #555;
+  padding: 12px;
+  margin: 8px 0;
+  text-align: center;
+}
+.practice-level-info .level-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f0c850;
+}
+.practice-level-info .level-desc {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 4px;
+}
+.practice-challenge-streak {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 8px 0;
+}
+.practice-challenge-streak .streak-dot {
+  width: 16px;
+  height: 16px;
+  background: #555;
+  border: 2px solid #333;
+}
+.practice-challenge-streak .streak-dot.filled {
+  background: #f0c850;
+  border-color: #8b6914;
+}
+.practice-challenge-streak .streak-dot.broken {
+  background: #a53a3a;
+  border-color: #752222;
+}
+.challenge-level-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin: 6px 0;
+  background: #222;
+  border: 4px solid #555;
+  cursor: pointer;
+}
+.challenge-level-row:hover {
+  background: #333;
+}
+.challenge-level-row.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.challenge-level-row .level-num {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f0c850;
+  min-width: 36px;
+  text-align: center;
+}
+.challenge-level-row .level-status {
+  font-size: 20px;
+}
+.challenge-level-row .level-name-text {
+  flex: 1;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+.challenge-level-row .level-reward {
+  font-size: 12px;
+  color: #aaa;
+}
+.practice-stats-bar {
+  display: flex;
+  justify-content: space-around;
+  margin: 12px 16px;
+  padding: 10px;
+  background: #222;
+  border: 4px solid #555;
+  font-size: 12px;
+}
+.practice-stats-bar .stat-item {
+  text-align: center;
+}
+.practice-stats-bar .stat-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f0c850;
+}
+.practice-stats-bar .stat-label {
+  color: #aaa;
+  font-size: 11px;
+}
 </style>
 </head>
 <body>
@@ -652,6 +957,100 @@ body {
   
   <div style="margin:0 16px 10px;font-size:12px;color:#aaa">已装备 <span id="vocabCount" style="color:#8bc96b;font-weight:bold">0</span> / 1500 件</div>
   <div class="inventory" id="vocabGrid"></div>
+
+  <!-- 练习模式入口 -->
+  <div class="practice-card" id="practiceEntry">
+    <div class="title">⚔️ 单词训练场</div>
+    <div class="subtitle">通过训练强化你的单词装备！完成训练获得经验星 ⭐</div>
+    <div class="practice-stats-bar" id="practiceStats">
+      <div class="stat-item"><div class="stat-value" id="statStars">0</div><div class="stat-label">⭐ 经验星</div></div>
+      <div class="stat-item"><div class="stat-value" id="statListenDone">0</div><div class="stat-label">🎧 拼读训练</div></div>
+      <div class="stat-item"><div class="stat-value" id="statSpellDone">0</div><div class="stat-label">✍️ 拼写训练</div></div>
+      <div class="stat-item"><div class="stat-value" id="statChallengeLevel">1</div><div class="stat-label">🏆 闯关进度</div></div>
+    </div>
+    <button class="practice-mode-btn blue" onclick="showPracticeMode('listen')">🎧 拼读训练 - 听音选词</button>
+    <button class="practice-mode-btn red" onclick="showPracticeMode('spell')">✍️ 拼写训练 - 看义写词</button>
+    <button class="practice-mode-btn orange" onclick="showPracticeMode('challenge')">🏆 闯关模式 - 连续挑战</button>
+  </div>
+
+  <!-- 拼读训练界面 -->
+  <div class="practice-card" id="listenPracticeArea" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="title">🎧 拼读训练</div>
+      <button class="practice-mode-btn" style="width:auto;padding:6px 12px;font-size:12px" onclick="closePracticeMode()">✕ 返回</button>
+    </div>
+    <div class="practice-progress">
+      <span>进度</span>
+      <div class="bar"><div class="bar-fill" id="listenProgressBar" style="width:0%"></div></div>
+      <span id="listenProgressText">0/10</span>
+    </div>
+    <div class="practice-question" id="listenQuestion">
+      <div>点击播放按钮，听单词发音</div>
+      <button class="audio-play-btn" onclick="playPracticeWord()">
+        <span class="play-icon">▶️</span>
+        <span>播放发音</span>
+      </button>
+    </div>
+    <div class="practice-options" id="listenOptions"></div>
+    <div id="listenFeedback" style="text-align:center;margin:10px 0;font-size:14px;font-weight:bold"></div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="practice-mode-btn" style="flex:1" id="listenNextBtn" onclick="nextListenQuestion()" disabled>下一题</button>
+    </div>
+  </div>
+
+  <!-- 拼写训练界面 -->
+  <div class="practice-card" id="spellPracticeArea" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="title">✍️ 拼写训练</div>
+      <button class="practice-mode-btn" style="width:auto;padding:6px 12px;font-size:12px" onclick="closePracticeMode()">✕ 返回</button>
+    </div>
+    <div class="practice-progress">
+      <span>进度</span>
+      <div class="bar"><div class="bar-fill" id="spellProgressBar" style="width:0%"></div></div>
+      <span id="spellProgressText">0/10</span>
+    </div>
+    <div class="practice-question" id="spellQuestion">
+      <div class="mean-hint" id="spellMeanHint">释义</div>
+      <div class="phonetic-hint" id="spellPhoneticHint">音标</div>
+    </div>
+    <input type="text" class="practice-spell-input" id="spellInput" placeholder="输入单词..." onkeydown="if(event.key==='Enter')checkSpell()">
+    <div id="spellFeedback" style="text-align:center;margin:10px 0;font-size:14px;font-weight:bold"></div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="practice-mode-btn" id="spellCheckBtn" onclick="checkSpell()" style="flex:1">提交</button>
+      <button class="practice-mode-btn blue" id="spellNextBtn" onclick="nextSpellQuestion()" style="flex:1;display:none">下一题</button>
+    </div>
+  </div>
+
+  <!-- 闯关模式界面 -->
+  <div class="practice-card" id="challengePracticeArea" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="title">🏆 闯关模式</div>
+      <button class="practice-mode-btn" style="width:auto;padding:6px 12px;font-size:12px" onclick="closePracticeMode()">✕ 返回</button>
+    </div>
+    <div id="challengeLevelSelect">
+      <div class="subtitle">选择关卡开始挑战！每关连续答对才能过关</div>
+      <div id="challengeLevels"></div>
+    </div>
+    <div id="challengeGameArea" style="display:none">
+      <div class="practice-level-info">
+        <div class="level-name" id="challengeLevelName">第1关</div>
+        <div class="level-desc" id="challengeLevelDesc">连续答对 5 题过关</div>
+      </div>
+      <div class="practice-challenge-streak" id="challengeStreak"></div>
+      <div class="practice-question" id="challengeQuestion"></div>
+      <div class="practice-options" id="challengeOptions"></div>
+      <div id="challengeFeedback" style="text-align:center;margin:10px 0;font-size:14px;font-weight:bold"></div>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button class="practice-mode-btn" id="challengeNextBtn" onclick="nextChallengeQuestion()" style="flex:1;display:none">继续</button>
+      </div>
+    </div>
+    <div class="practice-result" id="challengeResult" style="display:none">
+      <div class="big-text" id="challengeResultText">闯关成功！</div>
+      <div class="stars-earned" id="challengeResultStars"></div>
+      <div style="font-size:14px;color:#aaa;margin-bottom:12px" id="challengeResultDetail"></div>
+      <button class="practice-mode-btn blue" onclick="showChallengeLevels()" style="margin-top:8px">返回关卡</button>
+    </div>
+  </div>
 </div>
 
 <!-- ===== 语法工坊 ===== -->
@@ -3255,6 +3654,11 @@ if(!state.listenDone) state.listenDone = {num:0,time:0,dir:0};
 if(!state.speakDone) state.speakDone = [];
 if(!state.startDay) state.startDay = new Date().toISOString().split('T')[0];
 if(!state.dailyCheck) state.dailyCheck = {};
+if(!state.practiceListenDone) state.practiceListenDone = 0;
+if(!state.practiceSpellDone) state.practiceSpellDone = 0;
+if(!state.practiceChallengeLevel) state.practiceChallengeLevel = 1;
+if(!state.practiceChallengeBest) state.practiceChallengeBest = 0;
+if(!state.practiceStarsEarned) state.practiceStarsEarned = 0;
 
 function saveState(){
   try{
@@ -4378,6 +4782,11 @@ function renderProgress(){
   if(Object.keys(state.dailyCheck).length >= 30) badges.push('🔥 坚持一月');
   if(state.stars >= 20) badges.push('⭐ 星星收集者');
   if(state.stars >= 50) badges.push('⭐ 星星富豪');
+  if(state.practiceListenDone >= 1) badges.push('🎧 听音达人');
+  if(state.practiceSpellDone >= 1) badges.push('✍️ 拼写能手');
+  if(state.practiceChallengeBest >= 3) badges.push('🏆 闯关勇士');
+  if(state.practiceChallengeBest >= 5) badges.push('🏆 闯关大师');
+  if(state.practiceChallengeBest >= 10) badges.push('👑 闯关王者');
 
   var badgeHtml = '';
   if(badges.length){
@@ -4398,7 +4807,7 @@ function updateStats(){
     }
   }
 
-  var totalPct = Math.round((m/vocabData.length*20 + state.grammarDone.length/grammarExercises.length*15 + state.stars/100*20 + state.mockBest/100*20 + (state.writing1Done?10:0) + (state.writing2Done?10:0) + (state.listenDone.num?5:0) + (state.listenDone.time?5:0) + (state.listenDone.dir?5:0)) / 1.5);
+  var totalPct = Math.round((m/vocabData.length*20 + state.grammarDone.length/grammarExercises.length*15 + state.stars/100*20 + state.mockBest/100*20 + (state.writing1Done?10:0) + (state.writing2Done?10:0) + (state.listenDone.num?5:0) + (state.listenDone.time?5:0) + (state.listenDone.dir?5:0) + (state.practiceChallengeBest/10*5) + (state.practiceListenDone/10*5) + (state.practiceSpellDone/10*5)) / 1.75);
   document.getElementById('xpFill').style.width = Math.max(5, totalPct) + '%';
 
   var level = 1;
@@ -4479,6 +4888,408 @@ function resetProgress(){
   }
 }
 
+function resetProgress(){
+  if(confirm('确定要清空所有学习进度吗？此操作不可恢复！')){
+    localStorage.removeItem('ketState');
+    state = {mastered:[],completed:{},stars:0,grammarDone:[],readingDone:[],mockBest:0,listenDone:{num:0,time:0,dir:0},speakDone:[],startDay:new Date().toISOString().split('T')[0],dailyCheck:{},writing1Done:{},writing2Done:{},practiceListenDone:0,practiceSpellDone:0,practiceChallengeLevel:1,practiceChallengeBest:0,practiceStarsEarned:0};
+    saveState();
+    alert('已重置，页面将刷新。');
+    window.location.reload();
+  }
+}
+
+/* ===== 单词练习模式 ===== */
+var currentPracticeMode = '';
+var currentPracticeQuestions = [];
+var currentPracticeIndex = 0;
+var currentPracticeCorrect = 0;
+var currentPracticeAnswered = false;
+var currentChallengeLevel = 1;
+var currentChallengeStreak = 0;
+var currentChallengeQuestions = [];
+var currentChallengeIndex = 0;
+var currentChallengeWrong = false;
+
+function showPracticeMode(mode){
+  currentPracticeMode = mode;
+  document.getElementById('practiceEntry').style.display = 'none';
+  document.getElementById('listenPracticeArea').style.display = 'none';
+  document.getElementById('spellPracticeArea').style.display = 'none';
+  document.getElementById('challengePracticeArea').style.display = 'none';
+  
+  if(mode === 'listen'){
+    document.getElementById('listenPracticeArea').style.display = 'block';
+    startListenPractice();
+  } else if(mode === 'spell'){
+    document.getElementById('spellPracticeArea').style.display = 'block';
+    startSpellPractice();
+  } else if(mode === 'challenge'){
+    document.getElementById('challengePracticeArea').style.display = 'block';
+    showChallengeLevels();
+  }
+}
+
+function closePracticeMode(){
+  document.getElementById('practiceEntry').style.display = 'block';
+  document.getElementById('listenPracticeArea').style.display = 'none';
+  document.getElementById('spellPracticeArea').style.display = 'none';
+  document.getElementById('challengePracticeArea').style.display = 'none';
+  updatePracticeStats();
+}
+
+function updatePracticeStats(){
+  document.getElementById('statStars').textContent = state.stars;
+  document.getElementById('statListenDone').textContent = state.practiceListenDone;
+  document.getElementById('statSpellDone').textContent = state.practiceSpellDone;
+  document.getElementById('statChallengeLevel').textContent = state.practiceChallengeLevel;
+}
+
+function getPracticeWords(count, theme){
+  var pool = theme && theme !== 'all' ? vocabData.filter(function(v){return v.theme === theme;}) : vocabData;
+  if(pool.length <= count) return pool.slice();
+  var result = [];
+  var used = [];
+  while(result.length < count){
+    var idx = Math.floor(Math.random() * pool.length);
+    if(used.indexOf(idx) < 0){
+      used.push(idx);
+      result.push(pool[idx]);
+    }
+  }
+  return result;
+}
+
+function shuffleArray(arr){
+  var result = arr.slice();
+  for(var i = result.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = result[i];
+    result[i] = result[j];
+    result[j] = temp;
+  }
+  return result;
+}
+
+/* ===== 拼读训练（听音选词） ===== */
+function startListenPractice(){
+  currentPracticeQuestions = getPracticeWords(10, currentTheme);
+  currentPracticeIndex = 0;
+  currentPracticeCorrect = 0;
+  currentPracticeAnswered = false;
+  renderListenQuestion();
+}
+
+function renderListenQuestion(){
+  var q = currentPracticeQuestions[currentPracticeIndex];
+  currentPracticeAnswered = false;
+  document.getElementById('listenProgressBar').style.width = (currentPracticeIndex / currentPracticeQuestions.length * 100) + '%';
+  document.getElementById('listenProgressText').textContent = (currentPracticeIndex + 1) + '/' + currentPracticeQuestions.length;
+  document.getElementById('listenFeedback').innerHTML = '';
+  document.getElementById('listenNextBtn').disabled = true;
+  
+  var questionHtml = '<div>点击播放按钮，听单词发音</div>';
+  questionHtml += '<button class="audio-play-btn" onclick="playPracticeWord()">';
+  questionHtml += '<span class="play-icon">▶️</span><span>播放发音</span></button>';
+  questionHtml += '<div class="phonetic-hint">' + q.phonetic + '</div>';
+  questionHtml += '<div class="mean-hint">' + q.mean + '</div>';
+  document.getElementById('listenQuestion').innerHTML = questionHtml;
+  
+  var options = [];
+  options.push(q);
+  var distractors = getPracticeWords(3, 'all');
+  for(var i = 0; i < distractors.length; i++){
+    if(distractors[i].word !== q.word) options.push(distractors[i]);
+  }
+  options = options.slice(0, 4);
+  options = shuffleArray(options);
+  
+  var html = '';
+  for(var j = 0; j < options.length; j++){
+    html += '<button class="practice-option" onclick="checkListenAnswer(\'' + options[j].word + '\')">' + options[j].word + '</button>';
+  }
+  document.getElementById('listenOptions').innerHTML = html;
+}
+
+function playPracticeWord(){
+  if(currentPracticeQuestions[currentPracticeIndex]){
+    speak(currentPracticeQuestions[currentPracticeIndex].word);
+  }
+}
+
+function checkListenAnswer(word){
+  if(currentPracticeAnswered) return;
+  currentPracticeAnswered = true;
+  var q = currentPracticeQuestions[currentPracticeIndex];
+  var opts = document.querySelectorAll('#listenOptions .practice-option');
+  for(var i = 0; i < opts.length; i++){
+    opts[i].classList.add('disabled');
+    if(opts[i].textContent === q.word) opts[i].classList.add('correct');
+    else if(opts[i].textContent === word && word !== q.word) opts[i].classList.add('wrong');
+  }
+  
+  if(word === q.word){
+    currentPracticeCorrect++;
+    document.getElementById('listenFeedback').innerHTML = '<span style="color:#5a8c3a">✔ 正确！</span>';
+  } else {
+    document.getElementById('listenFeedback').innerHTML = '<span style="color:#a53a3a">❌ 错误！正确答案是 ' + q.word + '</span>';
+  }
+  document.getElementById('listenNextBtn').disabled = false;
+}
+
+function nextListenQuestion(){
+  currentPracticeIndex++;
+  if(currentPracticeIndex >= currentPracticeQuestions.length){
+    finishListenPractice();
+  } else {
+    renderListenQuestion();
+  }
+}
+
+function finishListenPractice(){
+  var stars = 0;
+  if(currentPracticeCorrect >= 8) stars = 3;
+  else if(currentPracticeCorrect >= 5) stars = 2;
+  else if(currentPracticeCorrect >= 3) stars = 1;
+  
+  state.practiceListenDone++;
+  state.stars += stars;
+  state.practiceStarsEarned += stars;
+  saveState();
+  
+  var html = '<div class="big-text">拼读训练完成！</div>';
+  html += '<div style="font-size:18px;margin:8px 0">正确 ' + currentPracticeCorrect + '/' + currentPracticeQuestions.length + '</div>';
+  html += '<div class="stars-earned">' + '⭐'.repeat(stars) + '</div>';
+  html += '<div style="font-size:14px;color:#aaa">获得 ' + stars + ' 颗经验星！</div>';
+  html += '<button class="practice-mode-btn blue" onclick="closePracticeMode()" style="margin-top:12px">返回训练场</button>';
+  
+  document.getElementById('listenPracticeArea').innerHTML = html;
+  updateStats();
+  renderQuickTeleport();
+}
+
+/* ===== 拼写训练（看义写词） ===== */
+function startSpellPractice(){
+  currentPracticeQuestions = getPracticeWords(10, currentTheme);
+  currentPracticeIndex = 0;
+  currentPracticeCorrect = 0;
+  currentPracticeAnswered = false;
+  renderSpellQuestion();
+}
+
+function renderSpellQuestion(){
+  var q = currentPracticeQuestions[currentPracticeIndex];
+  currentPracticeAnswered = false;
+  document.getElementById('spellProgressBar').style.width = (currentPracticeIndex / currentPracticeQuestions.length * 100) + '%';
+  document.getElementById('spellProgressText').textContent = (currentPracticeIndex + 1) + '/' + currentPracticeQuestions.length;
+  document.getElementById('spellFeedback').innerHTML = '';
+  document.getElementById('spellInput').value = '';
+  document.getElementById('spellInput').disabled = false;
+  document.getElementById('spellCheckBtn').style.display = 'block';
+  document.getElementById('spellNextBtn').style.display = 'none';
+  
+  document.getElementById('spellMeanHint').textContent = '释义：' + q.mean;
+  document.getElementById('spellPhoneticHint').textContent = '音标：' + q.phonetic;
+  document.getElementById('spellQuestion').dataset.word = q.word;
+}
+
+function checkSpell(){
+  if(currentPracticeAnswered) return;
+  currentPracticeAnswered = true;
+  var input = document.getElementById('spellInput').value.trim().toLowerCase();
+  var correctWord = document.getElementById('spellQuestion').dataset.word.toLowerCase();
+  document.getElementById('spellInput').disabled = true;
+  document.getElementById('spellCheckBtn').style.display = 'none';
+  document.getElementById('spellNextBtn').style.display = 'block';
+  
+  if(input === correctWord){
+    currentPracticeCorrect++;
+    document.getElementById('spellFeedback').innerHTML = '<span style="color:#5a8c3a">✔ 拼写正确！</span>';
+  } else {
+    document.getElementById('spellFeedback').innerHTML = '<span style="color:#a53a3a">❌ 错误！正确答案是 ' + correctWord + '</span>';
+  }
+}
+
+function nextSpellQuestion(){
+  currentPracticeIndex++;
+  if(currentPracticeIndex >= currentPracticeQuestions.length){
+    finishSpellPractice();
+  } else {
+    renderSpellQuestion();
+  }
+}
+
+function finishSpellPractice(){
+  var stars = 0;
+  if(currentPracticeCorrect >= 8) stars = 3;
+  else if(currentPracticeCorrect >= 5) stars = 2;
+  else if(currentPracticeCorrect >= 3) stars = 1;
+  
+  state.practiceSpellDone++;
+  state.stars += stars;
+  state.practiceStarsEarned += stars;
+  saveState();
+  
+  var html = '<div class="big-text">拼写训练完成！</div>';
+  html += '<div style="font-size:18px;margin:8px 0">正确 ' + currentPracticeCorrect + '/' + currentPracticeQuestions.length + '</div>';
+  html += '<div class="stars-earned">' + '⭐'.repeat(stars) + '</div>';
+  html += '<div style="font-size:14px;color:#aaa">获得 ' + stars + ' 颗经验星！</div>';
+  html += '<button class="practice-mode-btn blue" onclick="closePracticeMode()" style="margin-top:12px">返回训练场</button>';
+  
+  document.getElementById('spellPracticeArea').innerHTML = html;
+  updateStats();
+  renderQuickTeleport();
+}
+
+/* ===== 闯关模式 ===== */
+var challengeLevels = [
+  {name:'第1关', desc:'连续答对 5 题过关', count:5, options:4, theme:'all'},
+  {name:'第2关', desc:'连续答对 5 题过关', count:5, options:4, theme:'all'},
+  {name:'第3关', desc:'连续答对 7 题过关', count:7, options:4, theme:'all'},
+  {name:'第4关', desc:'连续答对 7 题过关', count:7, options:6, theme:'all'},
+  {name:'第5关', desc:'连续答对 10 题过关', count:10, options:4, theme:'all'},
+  {name:'第6关', desc:'连续答对 10 题过关', count:10, options:6, theme:'all'},
+  {name:'第7关', desc:'连续答对 10 题过关（无音标）', count:10, options:6, theme:'all', noPhonetic:true},
+  {name:'第8关', desc:'连续答对 10 题过关（无释义）', count:10, options:6, theme:'all', noMean:true},
+  {name:'第9关', desc:'连续答对 10 题过关（无提示）', count:10, options:8, theme:'all', noHint:true},
+  {name:'第10关', desc:'终极挑战！连续答对 15 题过关', count:15, options:8, theme:'all', noHint:true}
+];
+
+function showChallengeLevels(){
+  document.getElementById('challengeLevelSelect').style.display = 'block';
+  document.getElementById('challengeGameArea').style.display = 'none';
+  document.getElementById('challengeResult').style.display = 'none';
+  
+  var html = '';
+  for(var i = 0; i < challengeLevels.length; i++){
+    var lvl = challengeLevels[i];
+    var unlocked = i + 1 <= state.practiceChallengeLevel;
+    var cleared = i + 1 < state.practiceChallengeLevel;
+    var status = cleared ? '✅' : unlocked ? '🟢' : '🔒';
+    var cls = unlocked ? '' : 'locked';
+    html += '<div class="challenge-level-row ' + cls + '" onclick="' + (unlocked ? 'startChallengeLevel(' + i + ')' : '') + '">';
+    html += '<div class="level-num">' + (i + 1) + '</div>';
+    html += '<div class="level-status">' + status + '</div>';
+    html += '<div class="level-name-text">' + lvl.name + '<br><span style="font-size:11px;color:#aaa">' + lvl.desc + '</span></div>';
+    html += '<div class="level-reward">' + (cleared ? '⭐' : '') + '</div>';
+    html += '</div>';
+  }
+  document.getElementById('challengeLevels').innerHTML = html;
+}
+
+function startChallengeLevel(levelIdx){
+  currentChallengeLevel = levelIdx;
+  currentChallengeStreak = 0;
+  currentChallengeQuestions = getPracticeWords(challengeLevels[levelIdx].count, challengeLevels[levelIdx].theme);
+  currentChallengeIndex = 0;
+  currentChallengeWrong = false;
+  
+  document.getElementById('challengeLevelSelect').style.display = 'none';
+  document.getElementById('challengeGameArea').style.display = 'block';
+  document.getElementById('challengeResult').style.display = 'none';
+  document.getElementById('challengeLevelName').textContent = challengeLevels[levelIdx].name;
+  document.getElementById('challengeLevelDesc').textContent = challengeLevels[levelIdx].desc;
+  renderChallengeQuestion();
+}
+
+function renderChallengeQuestion(){
+  var q = currentChallengeQuestions[currentChallengeIndex];
+  var lvl = challengeLevels[currentChallengeLevel];
+  
+  var streakHtml = '';
+  for(var i = 0; i < lvl.count; i++){
+    var cls = i < currentChallengeStreak ? 'filled' : 'streak-dot';
+    streakHtml += '<div class="' + cls + ' ' + (i < currentChallengeStreak ? 'filled' : '') + '"></div>';
+  }
+  document.getElementById('challengeStreak').innerHTML = streakHtml;
+  
+  var questionHtml = '<div>听发音，选择正确的单词</div>';
+  questionHtml += '<button class="audio-play-btn" onclick="speak(\'' + q.word + '\')">';
+  questionHtml += '<span class="play-icon">▶️</span><span>播放发音</span></button>';
+  if(!lvl.noPhonetic && !lvl.noHint) questionHtml += '<div class="phonetic-hint">' + q.phonetic + '</div>';
+  if(!lvl.noMean && !lvl.noHint) questionHtml += '<div class="mean-hint">' + q.mean + '</div>';
+  document.getElementById('challengeQuestion').innerHTML = questionHtml;
+  
+  var options = [q];
+  var distractors = getPracticeWords(lvl.options - 1, 'all');
+  for(var i = 0; i < distractors.length; i++){
+    if(distractors[i].word !== q.word && options.length < lvl.options) options.push(distractors[i]);
+  }
+  options = shuffleArray(options);
+  
+  var html = '';
+  for(var j = 0; j < options.length; j++){
+    html += '<button class="practice-option" onclick="checkChallengeAnswer(\'' + options[j].word + '\')">' + options[j].word + '</button>';
+  }
+  document.getElementById('challengeOptions').innerHTML = html;
+  document.getElementById('challengeFeedback').innerHTML = '';
+  document.getElementById('challengeNextBtn').style.display = 'none';
+}
+
+function checkChallengeAnswer(word){
+  if(currentChallengeWrong) return;
+  var q = currentChallengeQuestions[currentChallengeIndex];
+  var opts = document.querySelectorAll('#challengeOptions .practice-option');
+  for(var i = 0; i < opts.length; i++){
+    opts[i].classList.add('disabled');
+    if(opts[i].textContent === q.word) opts[i].classList.add('correct');
+    else if(opts[i].textContent === word && word !== q.word) opts[i].classList.add('wrong');
+  }
+  
+  if(word === q.word){
+    currentChallengeStreak++;
+    document.getElementById('challengeFeedback').innerHTML = '<span style="color:#5a8c3a">✔ 正确！连续 ' + currentChallengeStreak + ' 题</span>';
+    if(currentChallengeStreak >= challengeLevels[currentChallengeLevel].count){
+      finishChallenge(true);
+      return;
+    }
+    document.getElementById('challengeNextBtn').style.display = 'block';
+  } else {
+    currentChallengeWrong = true;
+    document.getElementById('challengeFeedback').innerHTML = '<span style="color:#a53a3a">❌ 错误！正确答案是 ' + q.word + ' - 挑战失败</span>';
+    document.getElementById('challengeNextBtn').style.display = 'block';
+    document.getElementById('challengeNextBtn').textContent = '结束';
+    document.getElementById('challengeNextBtn').onclick = function(){ finishChallenge(false); };
+  }
+}
+
+function nextChallengeQuestion(){
+  currentChallengeIndex++;
+  if(currentChallengeIndex >= currentChallengeQuestions.length){
+    finishChallenge(true);
+  } else {
+    renderChallengeQuestion();
+  }
+}
+
+function finishChallenge(success){
+  document.getElementById('challengeGameArea').style.display = 'none';
+  document.getElementById('challengeResult').style.display = 'block';
+  
+  var stars = 0;
+  if(success){
+    stars = Math.min(currentChallengeLevel + 1, 5);
+    if(currentChallengeLevel + 1 > state.practiceChallengeLevel){
+      state.practiceChallengeLevel = currentChallengeLevel + 2;
+    }
+    if(currentChallengeLevel + 1 > state.practiceChallengeBest){
+      state.practiceChallengeBest = currentChallengeLevel + 1;
+    }
+    state.stars += stars;
+    state.practiceStarsEarned += stars;
+    document.getElementById('challengeResultText').textContent = '闯关成功！';
+    document.getElementById('challengeResultText').style.color = '#5a8c3a';
+    document.getElementById('challengeResultDetail').textContent = '连续答对 ' + currentChallengeStreak + ' 题，解锁下一关！';
+  } else {
+    document.getElementById('challengeResultText').textContent = '挑战失败';
+    document.getElementById('challengeResultText').style.color = '#a53a3a';
+    document.getElementById('challengeResultDetail').textContent = '连续答对 ' + currentChallengeStreak + ' 题，再接再厉！';
+  }
+  document.getElementById('challengeResultStars').textContent = '⭐'.repeat(stars);
+  saveState();
+  updateStats();
+  renderQuickTeleport();
+}
+
 function init(){
   importFromURL();
   updateHome();
@@ -4491,6 +5302,9 @@ function init(){
   renderListening();
   renderMockStart();
   renderProgress();
+  updateStats();
+  renderQuickTeleport();
+  updatePracticeStats();
   updateStats();
   renderQuickTeleport();
 
