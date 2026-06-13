@@ -969,6 +969,8 @@ body {
     <button class="mc-btn" data-filter="travel" onclick="filterVocab('travel')">✈️</button>
     <button class="mc-btn" data-filter="health" onclick="filterVocab('health')">🏥</button>
   </div>
+  <div style="margin:0 16px 10px;font-size:12px;color:#aaa">已装备 <span id="vocabCount" style="color:#8bc96b;font-weight:bold">0</span> / 1500 件</div>
+  <div class="inventory" id="vocabGrid"></div>
 </div>
 
 <!-- ===== 语法工坊 ===== -->
@@ -3430,19 +3432,6 @@ var mockQuestions = [
   {q:'The weather is ______ today than yesterday.',opts:['bad','worse','worst','more bad'],ans:1},
   {q:'He is ______ tall ______ walk through the door.',opts:['so; to','too; to','very; to','enough; to'],ans:1},
   {q:'She is ______ young to drive a car.',opts:['so','too','very','enough'],ans:1},
-];
-
-var listenDirections = [
-  {text:'Go straight and turn left at the first crossing.',opts:['Go straight, then turn left','Go straight, then turn right','Turn left first','Turn right first'],ans:0},
-  {text:'Go straight and turn right at the second crossing.',opts:['Go straight, then turn left','Go straight, then turn right','Turn left first','Turn right first'],ans:1},
-  {text:'Turn left and go straight for two blocks.',opts:['Turn left, then go straight','Turn right, then go straight','Go straight first','Turn around'],ans:0},
-  {text:'Turn right and go straight for one block.',opts:['Turn left, then go straight','Turn right, then go straight','Go straight first','Turn around'],ans:1},
-  {text:'Go straight past the park and turn left.',opts:['Go straight past the park, turn left','Go straight past the park, turn right','Turn left at the park','Turn right at the park'],ans:0},
-  {text:'Go straight past the school and turn right.',opts:['Go straight past the school, turn left','Go straight past the school, turn right','Turn left at the school','Turn right at the school'],ans:1},
-  {text:'Turn left at the bank, then go straight.',opts:['Turn left at the bank, go straight','Turn right at the bank, go straight','Go straight past the bank','Turn around at the bank'],ans:0},
-  {text:'Turn right at the supermarket, then go straight.',opts:['Turn left at the supermarket, go straight','Turn right at the supermarket, go straight','Go straight past the supermarket','Turn around at the supermarket'],ans:1},
-  {text:'Go straight and turn left at the traffic lights.',opts:['Go straight, turn left at traffic lights','Go straight, turn right at traffic lights','Turn left first','Turn right first'],ans:0},
-  {text:'Go straight and turn right at the bus stop.',opts:['Go straight, turn left at bus stop','Go straight, turn right at bus stop','Turn left first','Turn right first'],ans:1}
 ];
 
 var listenNumbers = ['13','15','22','30','35','42','50','56','64','77','80','88','91','100','106','120','135','200','333','500','21','24','27','31','33','36','38','41','44','47','52','55','58','61','66','69','72','75','82','85','90','93','95','99','102','108','111','115','118','125'];
