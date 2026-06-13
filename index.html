@@ -593,7 +593,7 @@ body {
   </div>
 
   <div class="section-title">📋 快速传送</div>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+  <div id="quickTeleport" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
     <a href="#vocab" class="mc-btn" style="display:block">📦 单词背包</a>
     <a href="#grammar" class="mc-btn" style="display:block">⚒️ 语法工坊</a>
     <a href="#writing" class="mc-btn" style="display:block">✍️ 书信台</a>
@@ -902,7 +902,8 @@ body {
     <div class="stone-card" style="text-align:center">
       <div style="font-size:18px;font-weight:bold;color:#f0c850;margin-bottom:8px">🎯 KET 迷你试炼</div>
       <div style="font-size:13px;color:#aaa">20道挑战题，约15分钟<br>阅读 + 语法 + 词汇</div>
-      <button class="mc-btn red" onclick="startMock()" style="margin-top:12px">开始试炼</button>
+      <div id="mockProgressInfo" style="margin-top:12px;font-size:13px;color:#ddd"></div>
+      <div id="mockButtons" style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap"></div>
     </div>
   </div>
 
@@ -3133,20 +3134,94 @@ function toggleVocab(word){
   renderVocab();
 }
 
+function renderQuickTeleport(){
+  var modules = [
+    {id:'vocab',name:'📦 单词背包',color:'#8bc96b',key:'vocab'},
+    {id:'grammar',name:'⚒️ 语法工坊',color:'#f0c850',key:'grammar'},
+    {id:'writing',name:'✍️ 书信台',color:'#d66b6b',key:'writing'},
+    {id:'listening',name:'👂 听声辨位',color:'#c026d3',key:'listening'},
+    {id:'speaking',name:'🗣️ 对话练习',color:'#4f46e5',key:'speaking'},
+    {id:'mock',name:'🎯 试炼场',color:'#a53a3a',key:'mock'}
+  ];
+  var html = '';
+  for(var i=0;i<modules.length;i++){
+    var m = modules[i];
+    var pct = 0;
+    if(m.key === 'vocab'){
+      var mc = 0;
+      for(var j=0;j<state.mastered.length;j++){
+        for(var k=0;k<vocabData.length;k++){
+          if(vocabData[k].word === state.mastered[j]){ mc++; break; }
+        }
+      }
+      pct = Math.round(mc / vocabData.length * 100);
+    }
+    else if(m.key === 'grammar') pct = Math.round(state.grammarDone.length / grammarExercises.length * 100);
+    else if(m.key === 'reading') pct = Math.min(Math.round(state.readingDone.length / 10 * 100), 100);
+    else if(m.key === 'writing') pct = (state.writing1Done && state.writing2Done) ? 100 : (state.writing1Done || state.writing2Done) ? 50 : 0;
+    else if(m.key === 'listening') pct = Math.round((state.listenDone.num + state.listenDone.time + state.listenDone.dir) / 3 * 100);
+    else if(m.key === 'speaking') pct = Math.min(Math.round(state.speakDone.length / 5 * 100), 100);
+    else if(m.key === 'mock') pct = state.mockBest;
+    
+    var hasProgress = pct > 0;
+    var label = hasProgress ? (pct + '%') : '未开始';
+    var btnClass = m.key === 'mock' ? 'mc-btn red' : 'mc-btn';
+    html += '<a href="#' + m.id + '" class="' + btnClass + '" style="display:block;position:relative">' + m.name;
+    html += '<span style="font-size:11px;color:' + m.color + ';display:block;margin-top:2px">' + label + '</span>';
+    if(hasProgress && m.key === 'mock'){
+      html += '<span style="font-size:10px;color:#aaa;display:block">最高分 ' + pct + '分</span>';
+    }
+    html += '</a>';
+  }
+  document.getElementById('quickTeleport').innerHTML = html;
+}
+
+function saveProgress(){
+  saveState();
+  renderQuickTeleport();
+  updateStats();
+  alert('✅ 进度已保存！可以在首页快速通道继续学习。');
+}
+
 function renderGrammar(){
   var html = '';
+  var done = 0;
   for(var i=0;i<grammarExercises.length;i++){
     var ex = grammarExercises[i];
-    var done = state.grammarDone.indexOf(i) >= 0;
+    var isDone = state.grammarDone.indexOf(i) >= 0;
+    if(isDone) done++;
     html += '<div class="stone-card">';
     html += '<div style="font-weight:bold;color:#fff;margin-bottom:10px">'+(i+1)+'. '+ex.q+'</div>';
     for(var j=0;j<ex.opts.length;j++){
-      html += '<button class="choice-btn" onclick="answerGrammar('+i+','+j+',this)" '+(done?'disabled':'')+'>'+String.fromCharCode(65+j)+'. '+ex.opts[j]+'</button>';
+      var cls = 'choice-btn';
+      if(isDone){
+        if(j === ex.ans) cls += ' correct';
+        else if(state.grammarLastAnswer && state.grammarLastAnswer[i] === j && j !== ex.ans) cls += ' wrong';
+      }
+      html += '<button class="'+cls+'" onclick="answerGrammar('+i+','+j+',this)" '+(isDone?'disabled':'')+'>'+String.fromCharCode(65+j)+'. '+ex.opts[j]+'</button>';
     }
-    html += '<div style="font-size:12px;color:#aaa;margin-top:8px;'+(done?'':'display:none')+'" id="explain_'+i+'">'+ex.explain+'</div>';
+    html += '<div style="font-size:12px;color:#aaa;margin-top:8px;'+(isDone?'':'display:none')+'" id="explain_'+i+'">'+ex.explain+'</div>';
     html += '</div>';
   }
   document.getElementById('grammarExercises').innerHTML = html;
+  
+  // 进度提示
+  var pct = Math.round(done / grammarExercises.length * 100);
+  var progressHtml = '<div class="stone-card" style="text-align:center">';
+  progressHtml += '<div style="font-size:14px;color:#f0c850;margin-bottom:8px">语法工坊进度</div>';
+  progressHtml += '<div class="xp-bar" style="margin:4px 16px;height:16px"><div class="xp-fill" style="width:'+pct+'%;height:100%"></div></div>';
+  progressHtml += '<div style="font-size:12px;color:#aaa">已完成 ' + done + ' / ' + grammarExercises.length + ' 题 (' + pct + '%)</div>';
+  progressHtml += '<div style="display:flex;gap:8px;justify-content:center;margin-top:10px">';
+  progressHtml += '<button class="mc-btn green" onclick="saveProgress()">💾 保存进度</button>';
+  if(done > 0){
+    progressHtml += '<button class="mc-btn" onclick="if(confirm(\'确定重置语法进度？\')){state.grammarDone=[];saveState();renderGrammar();updateStats();renderQuickTeleport();}">🔄 重置</button>';
+  }
+  progressHtml += '</div></div>';
+  
+  var grammarEl = document.getElementById('grammarExercises');
+  if(grammarEl){
+    grammarEl.insertAdjacentHTML('beforebegin', progressHtml);
+  }
 }
 
 function answerGrammar(idx,opt,el){
@@ -3160,17 +3235,22 @@ function answerGrammar(idx,opt,el){
   }
   document.getElementById('explain_'+idx).style.display = 'block';
   state.grammarDone.push(idx);
+  if(!state.grammarLastAnswer) state.grammarLastAnswer = {};
+  state.grammarLastAnswer[idx] = opt;
   if(correct){
     state.stars += 1;
-    alert('⭐ 答对了！获得 1 颗经验星！');
+    alert('✔ 答对了！获得 1 颗经验星！');
   } else {
-    alert('再想想！正确答案是：' + ex.opts[ex.ans] + '。' + ex.explain);
+    alert('❌ 错误！正确答案是：' + ex.opts[ex.ans] + '。' + ex.explain);
   }
   saveState();
+  updateStats();
+  renderQuickTeleport();
 }
 
 function renderReading(){
   var html = '';
+  var totalQs = 0, doneQs = 0;
   for(var ri=0;ri<readingExercises.length;ri++){
     var ex = readingExercises[ri];
     var key = 'r'+ri;
@@ -3180,17 +3260,41 @@ function renderReading(){
     for(var qi=0;qi<ex.qs.length;qi++){
       var q = ex.qs[qi];
       var id = key+'_'+qi;
-      var done = state.readingDone.indexOf(id) >= 0;
+      var isDone = state.readingDone.indexOf(id) >= 0;
+      totalQs++;
+      if(isDone) doneQs++;
       html += '<div style="margin-bottom:10px">';
       html += '<div style="font-weight:bold;color:#fff;margin-bottom:6px">'+(qi+1)+'. '+q.q+'</div>';
       for(var j=0;j<q.opts.length;j++){
-        html += '<button class="choice-btn" onclick="answerReading(\''+id+'\','+j+','+q.ans+',this)" '+(done?'disabled':'')+'>'+String.fromCharCode(65+j)+'. '+q.opts[j]+'</button>';
+        var cls = 'choice-btn';
+        if(isDone){
+          if(j === q.ans) cls += ' correct';
+          else if(state.readingLastAnswer && state.readingLastAnswer[id] === j && j !== q.ans) cls += ' wrong';
+        }
+        html += '<button class="'+cls+'" onclick="answerReading(\''+id+'\','+j+','+q.ans+',this)" '+(isDone?'disabled':'')+'>'+String.fromCharCode(65+j)+'. '+q.opts[j]+'</button>';
       }
       html += '</div>';
     }
     html += '</div>';
   }
   document.getElementById('readingExercises').innerHTML = html;
+  
+  // 进度提示
+  var pct = totalQs > 0 ? Math.round(doneQs / totalQs * 100) : 0;
+  var progressHtml = '<div class="stone-card" style="text-align:center">';
+  progressHtml += '<div style="font-size:14px;color:#6b9ed6;margin-bottom:8px">冒险日志进度</div>';
+  progressHtml += '<div class="xp-bar" style="margin:4px 16px;height:16px"><div class="xp-fill" style="width:'+pct+'%;height:100%"></div></div>';
+  progressHtml += '<div style="font-size:12px;color:#aaa">已完成 ' + doneQs + ' / ' + totalQs + ' 题 (' + pct + '%)</div>';
+  progressHtml += '<div style="display:flex;gap:8px;justify-content:center;margin-top:10px">';
+  progressHtml += '<button class="mc-btn green" onclick="saveProgress()">💾 保存进度</button>';
+  if(doneQs > 0){
+    progressHtml += '<button class="mc-btn" onclick="if(confirm(\'确定重置阅读进度？\')){state.readingDone=[];saveState();renderReading();updateStats();renderQuickTeleport();}">🔄 重置</button>';
+  }
+  progressHtml += '</div></div>';
+  var readingEl = document.getElementById('readingExercises');
+  if(readingEl){
+    readingEl.insertAdjacentHTML('beforebegin', progressHtml);
+  }
 }
 
 function answerReading(id,opt,ans,el){
@@ -3202,10 +3306,14 @@ function answerReading(id,opt,ans,el){
     opts[i].disabled = true;
   }
   state.readingDone.push(id);
+  if(!state.readingLastAnswer) state.readingLastAnswer = {};
+  state.readingLastAnswer[id] = opt;
   if(correct){
     state.stars += 1;
   }
   saveState();
+  updateStats();
+  renderQuickTeleport();
 }
 
 function checkWriting1(){
@@ -3674,10 +3782,47 @@ function checkWriting2(){
   }
 }
 
+function renderListening(){
+  var html = '';
+  var done = (state.listenDone.num ? 1 : 0) + (state.listenDone.time ? 1 : 0) + (state.listenDone.dir ? 1 : 0);
+  var total = 3;
+  var pct = Math.round(done / total * 100);
+  
+  var progressHtml = '<div class="stone-card" style="text-align:center">';
+  progressHtml += '<div style="font-size:14px;color:#c026d3;margin-bottom:8px">听声辨位进度</div>';
+  progressHtml += '<div class="xp-bar" style="margin:4px 16px;height:16px"><div class="xp-fill" style="width:'+pct+'%;height:100%"></div></div>';
+  progressHtml += '<div style="font-size:12px;color:#aaa">已完成 ' + done + ' / ' + total + ' 项 (' + pct + '%)</div>';
+  progressHtml += '<div style="display:flex;gap:8px;justify-content:center;margin-top:10px">';
+  progressHtml += '<button class="mc-btn green" onclick="saveProgress()">💾 保存进度</button>';
+  if(done > 0){
+    progressHtml += '<button class="mc-btn" onclick="if(confirm(\'确定重置听力进度？\')){state.listenDone={num:0,time:0,dir:0};saveState();renderListening();updateStats();renderQuickTeleport();}">🔄 重置</button>';
+  }
+  progressHtml += '</div></div>';
+  
+  var listenEl = document.getElementById('numAnswers');
+  if(listenEl){
+    listenEl.parentElement.insertAdjacentHTML('beforebegin', progressHtml);
+  }
+}
+
 var mockAnswers = [];
 var mockCurrent = 0;
 var mockTimer = null;
 var mockTimeLeft = 900;
+
+function renderMockStart(){
+  var html = '';
+  var hasProgress = state.mockBest > 0;
+  if(hasProgress){
+    document.getElementById('mockProgressInfo').innerHTML = '历史最高分：' + state.mockBest + '分';
+    html += '<button class="mc-btn red" onclick="startMock()">🔄 重新开始</button>';
+    html += '<button class="mc-btn blue" onclick="saveProgress()">💾 保存进度</button>';
+  } else {
+    document.getElementById('mockProgressInfo').innerHTML = '还没有参加过试炼';
+    html += '<button class="mc-btn red" onclick="startMock()">开始试炼</button>';
+  }
+  document.getElementById('mockButtons').innerHTML = html;
+}
 
 function startMock(){
   mockAnswers = [];
@@ -3756,7 +3901,7 @@ function submitMock(){
     '<div style="font-size:18px;color:#fff;margin-bottom:10px">'+grade+' '+stars+'</div>'+
     '<div style="font-size:13px;color:#aaa">答对 '+correct+' / '+mockQuestions.length+' 题</div>'+
     '<div style="font-size:13px;color:#aaa;margin-top:6px">历史最高分：'+state.mockBest+'分</div>'+
-    '<button class="mc-btn blue" onclick="startMock()" style="margin-top:20px">再次试炼</button>'+
+    '<button class="mc-btn blue" onclick="document.getElementById(\'mockResultArea\').style.display=\'none\';document.getElementById(\'mockStartArea\').style.display=\'block\';renderMockStart();renderQuickTeleport();" style="margin-top:20px">返回试炼场</button>'+
   '</div>';
 }
 
@@ -3846,6 +3991,8 @@ function updateStats(){
   document.getElementById('barListening').style.width = Math.round((state.listenDone.num+state.listenDone.time+state.listenDone.dir)/3*100)+'%';
   document.getElementById('mapSpeaking').textContent = Math.min(Math.round(state.speakDone.length/5*100),100)+'%';
   document.getElementById('barSpeaking').style.width = Math.min(Math.round(state.speakDone.length/5*100),100)+'%';
+
+  renderQuickTeleport();
 }
 
 /* ===== 数据同步（导出/导入链接） ===== */
@@ -3911,8 +4058,10 @@ function init(){
   renderReading();
   renderWriting();
   renderSpeaking();
+  renderMockStart();
   renderProgress();
   updateStats();
+  renderQuickTeleport();
 
   var hash = window.location.hash;
   if(hash && hash.length > 1){
