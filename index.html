@@ -934,22 +934,7 @@ body {
 <!-- ===== 单词背包 ===== -->
 <div class="section" id="vocab">
   <div class="section-title">📦 单词背包</div>
-
-  <!-- 练习模式入口 -->
-  <div class="practice-card" id="practiceEntry">
-    <div class="title">⚔️ 单词训练场</div>
-    <div class="subtitle">通过训练强化你的单词装备！完成训练获得经验星 ⭐</div>
-    <div class="practice-stats-bar" id="practiceStats">
-      <div class="stat-item"><div class="stat-value" id="statStars">0</div><div class="stat-label">⭐ 经验星</div></div>
-      <div class="stat-item"><div class="stat-value" id="statListenDone">0</div><div class="stat-label">🎧 拼读训练</div></div>
-      <div class="stat-item"><div class="stat-value" id="statSpellDone">0</div><div class="stat-label">✍️ 拼写训练</div></div>
-      <div class="stat-item"><div class="stat-value" id="statChallengeLevel">1</div><div class="stat-label">🏆 闯关进度</div></div>
-    </div>
-    <button class="practice-mode-btn blue" onclick="showPracticeMode('listen')">🎧 拼读训练 - 听音选词</button>
-    <button class="practice-mode-btn red" onclick="showPracticeMode('spell')">✍️ 拼写训练 - 看义写词</button>
-    <button class="practice-mode-btn orange" onclick="showPracticeMode('challenge')">🏆 闯关模式 - 连续挑战</button>
-  </div>
-
+  
   <div class="npc-box">
     <div class="npc-name">图书管理员</div>
     <div class="npc-text">每个单词都是一件装备！点击单词来装备它，听发音来熟悉它。收集更多装备，强化你的英语能力！</div>
@@ -969,8 +954,103 @@ body {
     <button class="mc-btn" data-filter="travel" onclick="filterVocab('travel')">✈️</button>
     <button class="mc-btn" data-filter="health" onclick="filterVocab('health')">🏥</button>
   </div>
+  
   <div style="margin:0 16px 10px;font-size:12px;color:#aaa">已装备 <span id="vocabCount" style="color:#8bc96b;font-weight:bold">0</span> / 1500 件</div>
   <div class="inventory" id="vocabGrid"></div>
+
+  <!-- 练习模式入口 -->
+  <div class="practice-card" id="practiceEntry">
+    <div class="title">⚔️ 单词训练场</div>
+    <div class="subtitle">通过训练强化你的单词装备！完成训练获得经验星 ⭐</div>
+    <div class="practice-stats-bar" id="practiceStats">
+      <div class="stat-item"><div class="stat-value" id="statStars">0</div><div class="stat-label">⭐ 经验星</div></div>
+      <div class="stat-item"><div class="stat-value" id="statListenDone">0</div><div class="stat-label">🎧 拼读训练</div></div>
+      <div class="stat-item"><div class="stat-value" id="statSpellDone">0</div><div class="stat-label">✍️ 拼写训练</div></div>
+      <div class="stat-item"><div class="stat-value" id="statChallengeLevel">1</div><div class="stat-label">🏆 闯关进度</div></div>
+    </div>
+    <button class="practice-mode-btn blue" onclick="showPracticeMode('listen')">🎧 拼读训练 - 听音选词</button>
+    <button class="practice-mode-btn red" onclick="showPracticeMode('spell')">✍️ 拼写训练 - 看义写词</button>
+    <button class="practice-mode-btn orange" onclick="showPracticeMode('challenge')">🏆 闯关模式 - 连续挑战</button>
+  </div>
+
+  <!-- 拼读训练界面 -->
+  <div class="practice-card" id="listenPracticeArea" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="title">🎧 拼读训练</div>
+      <button class="practice-mode-btn" style="width:auto;padding:6px 12px;font-size:12px" onclick="closePracticeMode()">✕ 返回</button>
+    </div>
+    <div class="practice-progress">
+      <span>进度</span>
+      <div class="bar"><div class="bar-fill" id="listenProgressBar" style="width:0%"></div></div>
+      <span id="listenProgressText">0/10</span>
+    </div>
+    <div class="practice-question" id="listenQuestion">
+      <div>点击播放按钮，听单词发音</div>
+      <button class="audio-play-btn" onclick="playPracticeWord()">
+        <span class="play-icon">▶️</span>
+        <span>播放发音</span>
+      </button>
+    </div>
+    <div class="practice-options" id="listenOptions"></div>
+    <div id="listenFeedback" style="text-align:center;margin:10px 0;font-size:14px;font-weight:bold"></div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="practice-mode-btn" style="flex:1" id="listenNextBtn" onclick="nextListenQuestion()" disabled>下一题</button>
+    </div>
+  </div>
+
+  <!-- 拼写训练界面 -->
+  <div class="practice-card" id="spellPracticeArea" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="title">✍️ 拼写训练</div>
+      <button class="practice-mode-btn" style="width:auto;padding:6px 12px;font-size:12px" onclick="closePracticeMode()">✕ 返回</button>
+    </div>
+    <div class="practice-progress">
+      <span>进度</span>
+      <div class="bar"><div class="bar-fill" id="spellProgressBar" style="width:0%"></div></div>
+      <span id="spellProgressText">0/10</span>
+    </div>
+    <div class="practice-question" id="spellQuestion">
+      <div class="mean-hint" id="spellMeanHint">释义</div>
+      <div class="phonetic-hint" id="spellPhoneticHint">音标</div>
+    </div>
+    <input type="text" class="practice-spell-input" id="spellInput" placeholder="输入单词..." onkeydown="if(event.key==='Enter')checkSpell()">
+    <div id="spellFeedback" style="text-align:center;margin:10px 0;font-size:14px;font-weight:bold"></div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="practice-mode-btn" id="spellCheckBtn" onclick="checkSpell()" style="flex:1">提交</button>
+      <button class="practice-mode-btn blue" id="spellNextBtn" onclick="nextSpellQuestion()" style="flex:1;display:none">下一题</button>
+    </div>
+  </div>
+
+  <!-- 闯关模式界面 -->
+  <div class="practice-card" id="challengePracticeArea" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="title">🏆 闯关模式</div>
+      <button class="practice-mode-btn" style="width:auto;padding:6px 12px;font-size:12px" onclick="closePracticeMode()">✕ 返回</button>
+    </div>
+    <div id="challengeLevelSelect">
+      <div class="subtitle">选择关卡开始挑战！每关连续答对才能过关</div>
+      <div id="challengeLevels"></div>
+    </div>
+    <div id="challengeGameArea" style="display:none">
+      <div class="practice-level-info">
+        <div class="level-name" id="challengeLevelName">第1关</div>
+        <div class="level-desc" id="challengeLevelDesc">连续答对 5 题过关</div>
+      </div>
+      <div class="practice-challenge-streak" id="challengeStreak"></div>
+      <div class="practice-question" id="challengeQuestion"></div>
+      <div class="practice-options" id="challengeOptions"></div>
+      <div id="challengeFeedback" style="text-align:center;margin:10px 0;font-size:14px;font-weight:bold"></div>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button class="practice-mode-btn" id="challengeNextBtn" onclick="nextChallengeQuestion()" style="flex:1;display:none">继续</button>
+      </div>
+    </div>
+    <div class="practice-result" id="challengeResult" style="display:none">
+      <div class="big-text" id="challengeResultText">闯关成功！</div>
+      <div class="stars-earned" id="challengeResultStars"></div>
+      <div style="font-size:14px;color:#aaa;margin-bottom:12px" id="challengeResultDetail"></div>
+      <button class="practice-mode-btn blue" onclick="showChallengeLevels()" style="margin-top:8px">返回关卡</button>
+    </div>
+  </div>
 </div>
 
 <!-- ===== 语法工坊 ===== -->
